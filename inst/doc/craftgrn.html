@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Get started with CraftGRN</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Get started with CraftGRN</h1>
+
+
+
+<p>CraftGRN is an R package for constructing and comparing
+condition-specific gene regulatory networks from matched ATAC-seq and
+RNA-seq data. The workflow follows three modules:</p>
+<ol style="list-style-type: decimal">
+<li>Predict TF binding sites from footprint or peak signal.</li>
+<li>Connect TF binding sites to candidate target genes.</li>
+<li>Learn regulatory topics and visualize differential GRNs.</li>
+</ol>
+<p>The full pipeline is designed around a project YAML file that records
+paths, sample metadata, threshold values, genome settings, and output
+directories. For day-to-day analysis, the recommended workflow is
+wrapper-first: run one wrapper per module, then use the step functions
+when you want to inspect or customize a specific stage.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;oncologylab/craftgrn&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(craftgrn)</span></code></pre></div>
+<div id="demo-data" class="section level2">
+<h2>Demo data</h2>
+<p>CraftGRN keeps demo datasets outside the source package so
+installation remains small and CRAN-friendly. The package helper reports
+any configured external demo bundles:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">craftgrn_demo_data_info</span>()</span></code></pre></div>
+<p>No external demo bundle is currently configured. To run your own
+project, point CraftGRN at a project-level YAML file and use the normal
+Module 1 preparation function:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>config <span class="ot">&lt;-</span> <span class="st">&quot;project.yaml&quot;</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>module1_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;predict_tf_binding_sites&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>omics <span class="ot">&lt;-</span> <span class="fu">load_prep_multiomic_data</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="at">config =</span> config,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="at">label_col =</span> <span class="st">&quot;strict_match_rna&quot;</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="at">do_preprocess =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>)</span></code></pre></div>
+<p>To run Module 1:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>module1 <span class="ot">&lt;-</span> <span class="fu">predict_tfbs</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="at">omics_data =</span> omics,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="at">out_dir =</span> module1_dir,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="at">output_format =</span> <span class="st">&quot;auto&quot;</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="at">write_outputs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="at">write_stats =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>)</span></code></pre></div>
+<p>For project-level reproducibility, keep the run code in a short
+script beside the project YAML. The GSE192390 demo script follows this
+pattern: wrapper modes run full modules with one call, while step modes
+expose intermediate objects.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">CRAFTGRN_DEMO_RUN_MODE =</span> <span class="st">&quot;full_wrapper&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;11_pipeline_gse192390_tcell_fibroblast_demo.R&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">CRAFTGRN_DEMO_RUN_MODE =</span> <span class="st">&quot;module3_steps&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;11_pipeline_gse192390_tcell_fibroblast_demo.R&quot;</span>)</span></code></pre></div>
+<p>Supported project-script modes should stay simple and explicit:</p>
+<ul>
+<li><code>module1_wrapper</code>, <code>module2_wrapper</code>, and
+<code>module3_wrapper</code> run one module.</li>
+<li><code>module1_steps</code>, <code>module2_steps</code>, and
+<code>module3_steps</code> expose intermediate objects for
+inspection.</li>
+<li><code>full_wrapper</code> runs Modules 1, 2, and 3 through wrapper
+calls.</li>
+<li><code>full_steps</code> runs Modules 1, 2, and 3 through step
+calls.</li>
+</ul>
+<p>Troubleshooting demo data:</p>
+<ul>
+<li>If <code>craftgrn_demo_data_info()</code> returns zero rows, no
+public demo bundle is currently advertised by this package version.</li>
+<li>If file paths fail after moving the project, pass the
+<code>project.yaml</code> path explicitly. A portable config should use
+<code>base_dir: &quot;.&quot;</code> so paths are relative to the config
+location.</li>
+<li>If the computer has limited memory, first run only
+<code>load_prep_multiomic_data()</code> and Module 1. Module 2 is larger
+because it computes TF-target correlations before restricting FP-target
+candidates to predicted TFBS.</li>
+</ul>
+</div>
+<div id="module-1-predict-tf-binding-sites" class="section level2">
+<h2>Module 1: Predict TF binding sites</h2>
+<p>Module 1 combines normalized ATAC signal, RNA expression, footprint
+summaries, and sample metadata into a multiomic object. It aligns
+footprint sites, builds condition-specific binding flags, normalizes
+footprint scores, and predicts TF binding sites with a single
+user-facing workflow. Internally, CraftGRN first correlates each aligned
+footprint with the TFs represented by its canonical motifs, applies
+configured correlation cutoffs, and labels footprints with at least one
+canonical-bound TF. By default, only these canonical-bound footprints
+are used for the all-expressed-TF prediction step.</p>
+<p><img role="img" aria-label="Module 1 workflow for preparing multiomic data, processing footprint evidence, and predicting TF binding sites." src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNDAwIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjMmMzZTUwOwogICAgICAgIGZvbnQtc2l6ZTogMTRweDsKICAgICAgfQoKICAgICAgLmNscy0xLCAuY2xzLTIsIC5jbHMtMywgLmNscy00LCAuY2xzLTUsIC5jbHMtNiwgLmNscy03LCAuY2xzLTgsIC5jbHMtOSwgLmNscy0xMCwgLmNscy0xMSwgLmNscy0xMiwgLmNscy0xMyB7CiAgICAgICAgZm9udC1mYW1pbHk6IEFyaWFsLUJvbGRNVCwgQXJpYWw7CiAgICAgICAgZm9udC13ZWlnaHQ6IDcwMDsKICAgICAgfQoKICAgICAgLmNscy0xLCAuY2xzLTIsIC5jbHMtMTQsIC5jbHMtNCwgLmNscy0xNSwgLmNscy01LCAuY2xzLTYsIC5jbHMtNywgLmNscy0xNiwgLmNscy04LCAuY2xzLTE3LCAuY2xzLTksIC5jbHMtMTAsIC5jbHMtMTgsIC5jbHMtMTEsIC5jbHMtMTIsIC5jbHMtMTMsIC5jbHMtMTksIC5jbHMtMjAgewogICAgICAgIGlzb2xhdGlvbjogaXNvbGF0ZTsKICAgICAgfQoKICAgICAgLmNscy0yLCAuY2xzLTQgewogICAgICAgIGZvbnQtc2l6ZTogOHB4OwogICAgICB9CgogICAgICAuY2xzLTIsIC5jbHMtMTUsIC5jbHMtNSwgLmNscy0xNyB7CiAgICAgICAgZmlsbDogI2U3NGMzYzsKICAgICAgfQoKICAgICAgLmNscy0yMSB7CiAgICAgICAgZmlsbDogI2U2NGIzNTsKICAgICAgICBzdHJva2U6ICNiMzNhMjk7CiAgICAgIH0KCiAgICAgIC5jbHMtMjEsIC5jbHMtMjIsIC5jbHMtMjMsIC5jbHMtMjQgewogICAgICAgIHN0cm9rZS13aWR0aDogM3B4OwogICAgICB9CgogICAgICAuY2xzLTI1IHsKICAgICAgICBmaWxsOiByZ2JhKDIyLCAxNjAsIDEzMywgLjMpOwogICAgICAgIHN0cm9rZTogIzE2YTA4NTsKICAgICAgfQoKICAgICAgLmNscy0yNSwgLmNscy0yNiwgLmNscy0yNyB7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAyLjVweDsKICAgICAgfQoKICAgICAgLmNscy0yOCB7CiAgICAgICAgZmlsbDogI2U2N2UyMjsKICAgICAgfQoKICAgICAgLmNscy0zIHsKICAgICAgICBmb250LXNpemU6IDEycHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMTQgewogICAgICAgIG9wYWNpdHk6IC41OwogICAgICAgIHN0cm9rZS1kYXNoYXJyYXk6IDEuNTcgMS41NzsKICAgICAgICBzdHJva2Utd2lkdGg6IC43OHB4OwogICAgICB9CgogICAgICAuY2xzLTE0LCAuY2xzLTI5LCAuY2xzLTMwLCAuY2xzLTIyLCAuY2xzLTI2LCAuY2xzLTIzLCAuY2xzLTMxLCAuY2xzLTMyLCAuY2xzLTI0LCAuY2xzLTMzLCAuY2xzLTI3LCAuY2xzLTM0IHsKICAgICAgICBmaWxsOiBub25lOwogICAgICB9CgogICAgICAuY2xzLTE0LCAuY2xzLTMwIHsKICAgICAgICBzdHJva2U6ICNiZGMzYzc7CiAgICAgIH0KCiAgICAgIC5jbHMtMjkgewogICAgICAgIHN0cm9rZS13aWR0aDogMS4yNHB4OwogICAgICB9CgogICAgICAuY2xzLTI5LCAuY2xzLTMzIHsKICAgICAgICBzdHJva2U6ICMzOTUyNTk7CiAgICAgIH0KCiAgICAgIC5jbHMtNCwgLmNscy0xOCwgLmNscy0xMywgLmNscy0yMCB7CiAgICAgICAgZmlsbDogIzI3YWU2MDsKICAgICAgfQoKICAgICAgLmNscy0zNSB7CiAgICAgICAgZmlsbDogIzM5NTI1OTsKICAgICAgfQoKICAgICAgLmNscy0xNSwgLmNscy0yNiB7CiAgICAgICAgc3Ryb2tlOiAjZTc0YzNjOwogICAgICB9CgogICAgICAuY2xzLTE1LCAuY2xzLTMxLCAuY2xzLTMyLCAuY2xzLTM2LCAuY2xzLTIwIHsKICAgICAgICBzdHJva2Utd2lkdGg6IDJweDsKICAgICAgfQoKICAgICAgLmNscy0xNSwgLmNscy0yMCB7CiAgICAgICAgb3BhY2l0eTogLjI7CiAgICAgIH0KCiAgICAgIC5jbHMtNSwgLmNscy0xMyB7CiAgICAgICAgZm9udC1zaXplOiAxMXB4OwogICAgICB9CgogICAgICAuY2xzLTYgewogICAgICAgIGZpbGw6ICM1ZDY4Njg7CiAgICAgIH0KCiAgICAgIC5jbHMtNiwgLmNscy03LCAuY2xzLTksIC5jbHMtMTAsIC5jbHMtMTIgewogICAgICAgIGZvbnQtc2l6ZTogOXB4OwogICAgICB9CgogICAgICAuY2xzLTIyIHsKICAgICAgICBzdHJva2U6ICMzNDk4ZGI7CiAgICAgIH0KCiAgICAgIC5jbHMtNywgLmNscy0xMCB7CiAgICAgICAgZmlsbDogIzdmOGM4ZDsKICAgICAgfQoKICAgICAgLmNscy03LCAuY2xzLTM3IHsKICAgICAgICBsZXR0ZXItc3BhY2luZzogLS4wNGVtOwogICAgICB9CgogICAgICAuY2xzLTM4IHsKICAgICAgICBsZXR0ZXItc3BhY2luZzogLS4wN2VtOwogICAgICB9CgogICAgICAuY2xzLTIzLCAuY2xzLTMxLCAuY2xzLTM2IHsKICAgICAgICBzdHJva2U6ICMyYzNlNTA7CiAgICAgIH0KCiAgICAgIC5jbHMtMTYgewogICAgICAgIGZpbGw6ICM5YjU5YjY7CiAgICAgIH0KCiAgICAgIC5jbHMtMTYsIC5jbHMtMTggewogICAgICAgIG9wYWNpdHk6IC44OwogICAgICB9CgogICAgICAuY2xzLTggewogICAgICAgIGZvbnQtc2l6ZTogMTBweDsKICAgICAgfQoKICAgICAgLmNscy04LCAuY2xzLTExIHsKICAgICAgICBmaWxsOiAjZmZmOwogICAgICB9CgogICAgICAuY2xzLTMyIHsKICAgICAgICBzdHJva2U6ICMwMDAzMDU7CiAgICAgIH0KCiAgICAgIC5jbHMtMTcgewogICAgICAgIG9wYWNpdHk6IC42OwogICAgICB9CgogICAgICAuY2xzLTI0IHsKICAgICAgICBzdHJva2U6ICM5YjU5YjY7CiAgICAgIH0KCiAgICAgIC5jbHMtOSB7CiAgICAgICAgZmlsbDogIzU1NWI1YjsKICAgICAgfQoKICAgICAgLmNscy0zOSB7CiAgICAgICAgZmlsbDogIzAwMDMwNTsKICAgICAgfQoKICAgICAgLmNscy0xMSB7CiAgICAgICAgZm9udC1zaXplOiAyNHB4OwogICAgICB9CgogICAgICAuY2xzLTEyIHsKICAgICAgICBmaWxsOiAjMTZhMDg1OwogICAgICB9CgogICAgICAuY2xzLTI3LCAuY2xzLTIwIHsKICAgICAgICBzdHJva2U6ICMyN2FlNjA7CiAgICAgIH0KCiAgICAgIC5jbHMtMTkgewogICAgICAgIGZpbGw6ICM5NWE1YTY7CiAgICAgICAgb3BhY2l0eTogLjM7CiAgICAgIH0KCiAgICAgIC5jbHMtMzQgewogICAgICAgIHN0cm9rZTogI2ZmZjsKICAgICAgICBzdHJva2Utd2lkdGg6IDEuNXB4OwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8Zz4KICAgIDxjaXJjbGUgY2xhc3M9ImNscy0yMSIgY3g9IjgzLjU0IiBjeT0iMTEzLjc5IiByPSIzNSIvPgogICAgPHRleHQgY2xhc3M9ImNscy0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzAuODcgMTIyLjc5KSI+PHRzcGFuIHg9IjAiIHk9IjAiPjFhPC90c3Bhbj48L3RleHQ+CiAgPC9nPgogIDxsaW5lIGNsYXNzPSJjbHMtMjMiIHgxPSIxNjMuNTQiIHkxPSIxMjMuNzkiIHgyPSI0NDMuNTQiIHkyPSIxMjMuNzkiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTEyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyODIuNDYgNDguNzkpIj48dHNwYW4gY2xhc3M9ImNscy0zOCIgeD0iMCIgeT0iMCI+QVQ8L3RzcGFuPjx0c3BhbiB4PSIxMC42NiIgeT0iMCI+QUMtc2VxPC90c3Bhbj48L3RleHQ+CiAgPGxpbmUgY2xhc3M9ImNscy0zMCIgeDE9IjE2My41NCIgeTE9IjEyMy43OSIgeDI9IjQ0My41NCIgeTI9IjEyMy43OSIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMjUiIGQ9Ik0xOTMuNTQsMTIzLjc5bDIwLTUsMjAtMTAsMjAtMjAsMjAtMTUsMjAtOCwxMC00LDEwLDQsMjAsOCwyMCwxNSwyMCwyMCwyMCwxMCwyMCw1aC0yMjBaIi8+CiAgPGVsbGlwc2UgY2xhc3M9ImNscy0xNyIgY3g9IjI3My41NCIgY3k9IjE0MC4zNyIgcng9IjIyIiByeT0iNS41NCIvPgogIDxlbGxpcHNlIGNsYXNzPSJjbHMtMTciIGN4PSIzMzMuNTQiIGN5PSIxNDAuMzciIHJ4PSIxOCIgcnk9IjQuOTIiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iMjc4LjU0IiBjeT0iMTQ3Ljc1IiByeD0iMjQiIHJ5PSI1LjU0Ii8+CiAgPGVsbGlwc2UgY2xhc3M9ImNscy0xNyIgY3g9IjMzOC41NCIgY3k9IjE0Ny43NSIgcng9IjIwIiByeT0iNS41NCIvPgogIDxlbGxpcHNlIGNsYXNzPSJjbHMtMTciIGN4PSIyNzEuNTQiIGN5PSIxNTUuMTQiIHJ4PSIyMyIgcnk9IjUuNTQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iMzMxLjU0IiBjeT0iMTU1LjE0IiByeD0iMjEiIHJ5PSI1LjU0Ii8+CiAgPGVsbGlwc2UgY2xhc3M9ImNscy0xNyIgY3g9IjI3Ni41NCIgY3k9IjE2Mi41MiIgcng9IjIwIiByeT0iNC45MiIvPgogIDxlbGxpcHNlIGNsYXNzPSJjbHMtMTciIGN4PSIzMzUuNTQiIGN5PSIxNjIuNTIiIHJ4PSIxOSIgcnk9IjQuOTIiLz4KICA8bGluZSBjbGFzcz0iY2xzLTE0IiB4MT0iMjczLjU0IiB5MT0iMTI5LjI5IiB4Mj0iMjczLjU0IiB5Mj0iMTY5LjI5Ii8+CiAgPGxpbmUgY2xhc3M9ImNscy0xNCIgeDE9IjMzMy41NCIgeTE9IjEyOS4yOSIgeDI9IjMzMy41NCIgeTI9IjE2OS4yOSIvPgogIDxsaW5lIGNsYXNzPSJjbHMtMjMiIHgxPSI1NjMuNTQiIHkxPSIxMjMuNzkiIHgyPSI4NDMuNTQiIHkyPSIxMjMuNzkiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTEyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2ODIuNDYgNDguNzkpIj48dHNwYW4gY2xhc3M9ImNscy0zOCIgeD0iMCIgeT0iMCI+QVQ8L3RzcGFuPjx0c3BhbiB4PSIxMC42NiIgeT0iMCI+QUMtc2VxPC90c3Bhbj48L3RleHQ+CiAgPGxpbmUgY2xhc3M9ImNscy0zMCIgeDE9IjU2My41NCIgeTE9IjEyMy43OSIgeDI9Ijg0My41NCIgeTI9IjEyMy43OSIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMjUiIGQ9Ik01OTMuNTQsMTIzLjc5bDIwLTUsMjAtMTAsMjAtMjAsMjAtMTUsMjAtOCwxMC00LDEwLDQsMjAsOCwyMCwxNSwyMCwyMCwyMCwxMCwyMCw1aC0yMjBaIi8+CiAgPGVsbGlwc2UgY2xhc3M9ImNscy0xNiIgY3g9IjY3NC41NCIgY3k9IjE0NC43OSIgcng9IjMwIiByeT0iMTMiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDY1My4xNSAxNDkuNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+Q2x1c3RlciAxPC90c3Bhbj48L3RleHQ+CiAgPHRleHQgY2xhc3M9ImNscy05IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2NjMuODcgMTY4Ljc5KSI+PHRzcGFuIHg9IjAiIHk9IjAiPjQg4oaSIDE8L3RzcGFuPjwvdGV4dD4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE2IiBjeD0iNzM0LjU0IiBjeT0iMTQ0Ljc5IiByeD0iMjciIHJ5PSIxMyIvPgogIDx0ZXh0IGNsYXNzPSJjbHMtOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzEzLjE1IDE0OS43OSkiPjx0c3BhbiB4PSIwIiB5PSIwIj5DbHVzdGVyIDI8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcyMy44NyAxNjguNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+NCDihpIgMTwvdHNwYW4+PC90ZXh0PgogIDxnPgogICAgPGNpcmNsZSBjbGFzcz0iY2xzLTIxIiBjeD0iODMuNTQiIGN5PSIyODYuNTkiIHI9IjM1Ii8+CiAgICA8dGV4dCBjbGFzcz0iY2xzLTExIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3MC44NyAyOTUuNTkpIj48dHNwYW4geD0iMCIgeT0iMCI+MWI8L3RzcGFuPjwvdGV4dD4KICA8L2c+CiAgPHRleHQgY2xhc3M9ImNscy0xIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNzcuNTQgMjQ3Ljc5KSI+PHRzcGFuIHg9IjAiIHk9IjAiPlRGIEV4cHJlc3Npb248L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE1NS41NCAyNjcuNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+QTwvdHNwYW4+PC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJjbHMtMTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE3NS41NCAyNjcuNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+QjwvdHNwYW4+PC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJjbHMtMTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE5NS41NCAyNjcuNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+QzwvdHNwYW4+PC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJjbHMtMTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIxNS41NCAyNjcuNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+RDwvdHNwYW4+PC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJjbHMtMTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIzNS41NCAyNjcuNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+RTwvdHNwYW4+PC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJjbHMtMTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI1NS41NCAyNjcuNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+RjwvdHNwYW4+PC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJjbHMtMTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI3NS41NCAyNjcuNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+RzwvdHNwYW4+PC90ZXh0PgogIDxyZWN0IGNsYXNzPSJjbHMtMjgiIHg9IjE1MC41NCIgeT0iMjcyLjc5IiB3aWR0aD0iMTUiIGhlaWdodD0iNDUiLz4KICA8cmVjdCBjbGFzcz0iY2xzLTI4IiB4PSIxNzAuNTQiIHk9IjI3Ny43OSIgd2lkdGg9IjE1IiBoZWlnaHQ9IjQwIi8+CiAgPHJlY3QgY2xhc3M9ImNscy0yOCIgeD0iMTkwLjU0IiB5PSIyODUuNzkiIHdpZHRoPSIxNSIgaGVpZ2h0PSIzMiIvPgogIDxyZWN0IGNsYXNzPSJjbHMtMjgiIHg9IjIxMC41NCIgeT0iMjk1Ljc5IiB3aWR0aD0iMTUiIGhlaWdodD0iMjIiLz4KICA8cmVjdCBjbGFzcz0iY2xzLTI4IiB4PSIyMzAuNTQiIHk9IjMwMi43OSIgd2lkdGg9IjE1IiBoZWlnaHQ9IjE1Ii8+CiAgPHJlY3QgY2xhc3M9ImNscy0yOCIgeD0iMjUwLjU0IiB5PSIzMDcuNzkiIHdpZHRoPSIxNSIgaGVpZ2h0PSIxMCIvPgogIDxyZWN0IGNsYXNzPSJjbHMtMjgiIHg9IjI3MC41NCIgeT0iMzEwLjc5IiB3aWR0aD0iMTUiIGhlaWdodD0iNyIvPgogIDxsaW5lIGNsYXNzPSJjbHMtMzEiIHgxPSIxNTAuNTQiIHkxPSIzMjIuNzkiIHgyPSIyOTAuNTQiIHkyPSIzMjIuNzkiLz4KICA8Y2lyY2xlIGNsYXNzPSJjbHMtMjAiIGN4PSIzMjcuNTQiIGN5PSIyNjIuNzkiIHI9IjIwIi8+CiAgPHBhdGggY2xhc3M9ImNscy0yNyIgZD0iTTMxNy41NCwyNTcuNzloMjBNMzMzLjU0LDI1My43OWw0LDQtNCw0Ii8+CiAgPHBhdGggY2xhc3M9ImNscy0yNyIgZD0iTTMzNy41NCwyNjcuNzloLTIwTTMyMS41NCwyNjMuNzlsLTQsNCw0LDQiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMxNS44NyAyMzYuNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+cj0wLjk1PC90c3Bhbj48L3RleHQ+CiAgPHRleHQgY2xhc3M9ImNscy03IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MDIuNTQgMjMxLjc5KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkE8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTEwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MjIuNTQgMjMxLjc5KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkI8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTEwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0NDIuNTQgMjMxLjc5KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkM8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTEwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0NjIuNTQgMjMxLjc5KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkQ8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTEwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0ODIuNTQgMjMxLjc5KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkU8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTEwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MDIuNTQgMjMxLjc5KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkY8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTEwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MjIuNTQgMjMxLjc5KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkc8L3RzcGFuPjwvdGV4dD4KICA8cGF0aCBjbGFzcz0iY2xzLTI0IiBkPSJNNDA1LjA0LDI0MS43OWwyMCw1LDIwLDgsMjAsMTAsMjAsNywyMCw1LDIwLDMiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTM2IiBkPSJNMzk3LjU0LDI4Ni43OWgxNDAiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNDA1LjA0IiBjeT0iMjQxLjc5IiByeD0iNiIgcnk9IjQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNDI1LjA0IiBjeT0iMjQ2Ljc5IiByeD0iNiIgcnk9IjQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNDQ1LjA0IiBjeT0iMjU0Ljc5IiByeD0iNiIgcnk9IjQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNDY1LjA0IiBjeT0iMjY0Ljc5IiByeD0iNiIgcnk9IjQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNDg1LjA0IiBjeT0iMjcxLjc5IiByeD0iNiIgcnk9IjQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNTA1LjA0IiBjeT0iMjc2Ljc5IiByeD0iNiIgcnk9IjQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNTI1LjA0IiBjeT0iMjc5Ljc5IiByeD0iNiIgcnk9IjQiLz4KICA8Y2lyY2xlIGNsYXNzPSJjbHMtMTUiIGN4PSIzMjcuNTQiIGN5PSIzMTQuNzkiIHI9IjIwIi8+CiAgPHBhdGggY2xhc3M9ImNscy0yNiIgZD0iTTMxNy41NCwzMDkuNzloMjBNMzMzLjU0LDMwNS43OWw0LDQtNCw0Ii8+CiAgPHBhdGggY2xhc3M9ImNscy0yNiIgZD0iTTMzNy41NCwzMTkuNzloLTIwTTMyMS41NCwzMTUuNzlsLTQsNCw0LDQiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMxNS44NyAzNDQuNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+cj0wLjEyPC90c3Bhbj48L3RleHQ+CiAgPHBhdGggY2xhc3M9ImNscy0yNCIgZD0iTTQwNS4wNCwzMTAuNzlsMjAsMjAsMjAtMjUsMjAsMjAsMjAtMTAsMjAsMTgsMjAtMTMiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTM2IiBkPSJNMzk3LjU0LDM0MC43OWgxNDAiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNDA1LjA0IiBjeT0iMzEwLjc5IiByeD0iNiIgcnk9IjQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNDI1LjA0IiBjeT0iMzMwLjc5IiByeD0iNiIgcnk9IjQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNDQ1LjA0IiBjeT0iMzA1Ljc5IiByeD0iNiIgcnk9IjQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNDY1LjA0IiBjeT0iMzI1Ljc5IiByeD0iNiIgcnk9IjQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNDg1LjA0IiBjeT0iMzE1Ljc5IiByeD0iNiIgcnk9IjQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNTA1LjA0IiBjeT0iMzMzLjc5IiByeD0iNiIgcnk9IjQiLz4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE3IiBjeD0iNTI1LjA0IiBjeT0iMzIwLjc5IiByeD0iNiIgcnk9IjQiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTEzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2OTAuMjUgMzMwLjc5KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkFjdGl2ZSBURkJTPC90c3Bhbj48L3RleHQ+CiAgPHRleHQgY2xhc3M9ImNscy02IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2NDUuMDQgMjY0Ljc5KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkNvbmRpdGlvbjwvdHNwYW4+PHRzcGFuIGNsYXNzPSJjbHMtMzciIHg9IjQxLjk5IiB5PSIwIj4gPC90c3Bhbj48dHNwYW4geD0iNDQuMTUiIHk9IjAiPkE6PC90c3Bhbj48L3RleHQ+CiAgPHBhdGggY2xhc3M9ImNscy0yMiIgZD0iTTcwMS41NCwyNjIuNzljMTYuNjctNS4zMywzMy4zMy01LjMzLDUwLDAiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTIyIiBkPSJNNzAxLjU0LDI2Mi43OWMxNi42Nyw1LjMzLDMzLjMzLDUuMzMsNTAsMCIvPgogIDxlbGxpcHNlIGNsYXNzPSJjbHMtMTgiIGN4PSI3MjYuNTQiIGN5PSIyNjIuNzkiIHJ4PSIxMiIgcnk9IjciLz4KICA8cGF0aCBjbGFzcz0iY2xzLTM0IiBkPSJNNzIzLjU0LDI2Mi43OWwyLDIsNC00Ii8+CiAgPHBhdGggY2xhc3M9ImNscy0yMiIgZD0iTTcwMS41NCwyODQuNzljMTYuNjctNS4zMywzMy4zMy01LjMzLDUwLDAiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTIyIiBkPSJNNzAxLjU0LDI4NC43OWMxNi42Nyw1LjMzLDMzLjMzLDUuMzMsNTAsMCIvPgogIDxlbGxpcHNlIGNsYXNzPSJjbHMtMTgiIGN4PSI3MjYuNTQiIGN5PSIyODQuNzkiIHJ4PSIxMiIgcnk9IjciLz4KICA8cGF0aCBjbGFzcz0iY2xzLTM0IiBkPSJNNzIzLjU0LDI4NC43OWwyLDIsNC00Ii8+CiAgPHBhdGggY2xhc3M9ImNscy0yMiIgZD0iTTcwMS41NCwzMDYuNzljMTYuNjctNS4zMywzMy4zMy01LjMzLDUwLDAiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTIyIiBkPSJNNzAxLjU0LDMwNi43OWMxNi42Nyw1LjMzLDMzLjMzLDUuMzMsNTAsMCIvPgogIDxlbGxpcHNlIGNsYXNzPSJjbHMtMTkiIGN4PSI3MjYuNTQiIGN5PSIzMDYuNzkiIHJ4PSIxMiIgcnk9IjciLz4KICA8dGV4dCBjbGFzcz0iY2xzLTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcyMi40MiAzMDguNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+WDwvdHNwYW4+PC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJjbHMtNSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzg2LjU0IDMzMC42NSkiPjx0c3BhbiB4PSIwIiB5PSIwIj5SZWplY3RlZDwvdHNwYW4+PC90ZXh0PgogIDxnPgogICAgPHBhdGggY2xhc3M9ImNscy0yMiIgZD0iTTc3OS41NCwyNjIuMDdjMTYuNjctNS4zMywzMy4zMy01LjMzLDUwLDAiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMjIiIGQ9Ik03NzkuNTQsMjYyLjA3YzE2LjY3LDUuMzMsMzMuMzMsNS4zMyw1MCwwIi8+CiAgICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE5IiBjeD0iODA0LjU0IiBjeT0iMjYyLjA3IiByeD0iMTIiIHJ5PSI3Ii8+CiAgICA8dGV4dCBjbGFzcz0iY2xzLTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgwMS40OSAyNjUuMDcpIj48dHNwYW4geD0iMCIgeT0iMCI+WDwvdHNwYW4+PC90ZXh0PgogICAgPHBhdGggY2xhc3M9ImNscy0yMiIgZD0iTTc3OS41NCwyODQuMDdjMTYuNjctNS4zMywzMy4zMy01LjMzLDUwLDAiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMjIiIGQ9Ik03NzkuNTQsMjg0LjA3YzE2LjY3LDUuMzMsMzMuMzMsNS4zMyw1MCwwIi8+CiAgICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE5IiBjeD0iODA0LjU0IiBjeT0iMjg0LjA3IiByeD0iMTIiIHJ5PSI3Ii8+CiAgICA8dGV4dCBjbGFzcz0iY2xzLTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgwMS40OSAyODcuMDcpIj48dHNwYW4geD0iMCIgeT0iMCI+WDwvdHNwYW4+PC90ZXh0PgogICAgPHBhdGggY2xhc3M9ImNscy0yMiIgZD0iTTc3OS41NCwzMDYuMDdjMTYuNjctNS4zMywzMy4zMy01LjMzLDUwLDAiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMjIiIGQ9Ik03NzkuNTQsMzA2LjA3YzE2LjY3LDUuMzMsMzMuMzMsNS4zMyw1MCwwIi8+CiAgICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE5IiBjeD0iODA0LjU0IiBjeT0iMzA2LjA3IiByeD0iMTIiIHJ5PSI3Ii8+CiAgICA8dGV4dCBjbGFzcz0iY2xzLTUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgwMS40OSAzMDkuMDcpIj48dHNwYW4geD0iMCIgeT0iMCI+WDwvdHNwYW4+PC90ZXh0PgogIDwvZz4KICA8dGV4dCBjbGFzcz0iY2xzLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE0NS4yIDE0Ny45NikiPjx0c3BhbiB4PSIwIiB5PSIwIj5PdmVybGFwcGluZywgPC90c3Bhbj48dHNwYW4geD0iLTEwLjY2IiB5PSIxNC40Ij5yZWR1bmRhbnQgbW90aWZzPC90c3Bhbj48L3RleHQ+CiAgPHRleHQgY2xhc3M9ImNscy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3ODAuNTUgMTQ2Ljc4KSI+PHRzcGFuIHg9IjAiIHk9IjAiPk5vbi1yZWR1bmRhbnQ8L3RzcGFuPjx0c3BhbiB4PSItNi4zNCIgeT0iMTQuNCI+Zm9vdHByaW50IGNsdXN0ZXJzPC90c3Bhbj48L3RleHQ+CiAgPHRleHQgY2xhc3M9ImNscy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0NzYuNjIgMTYwLjA4KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkNvbGxhcHNlPC90c3Bhbj48L3RleHQ+CiAgPHRleHQvPgogIDx0ZXh0IGNsYXNzPSJjbHMtMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzYzLjU0IDI2Ni43OSkiPjx0c3BhbiB4PSIwIiB5PSIwIj5GUDE8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM2My41NCAzMjYuNzkpIj48dHNwYW4geD0iMCIgeT0iMCI+RlAyPC90c3Bhbj48L3RleHQ+CiAgPHRleHQgY2xhc3M9ImNscy0xIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3MTUuNTQgMjQwLjUzKSI+PHRzcGFuIHg9IjAiIHk9IjAiPkZQMTwvdHNwYW4+PC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJjbHMtMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzkxLjU0IDI0MC41MykiPjx0c3BhbiB4PSIwIiB5PSIwIj5GUDI8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDY0NC43IDI4OC4wNykiPjx0c3BhbiB4PSIwIiB5PSIwIj5Db25kaXRpb24gQjo8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDY0NC4yIDMxMC43OSkiPjx0c3BhbiB4PSIwIiB5PSIwIj5Db25kaXRpb24gRzo8L3RzcGFuPjwvdGV4dD4KICA8Zz4KICAgIDxsaW5lIGNsYXNzPSJjbHMtMzIiIHgxPSI4My41NCIgeTE9IjE2Ny42OSIgeDI9IjgzLjU0IiB5Mj0iMjE0Ljk3Ii8+CiAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTM5IiBwb2ludHM9Ijc3LjczIDIxMS4wMSA4My41NCAyMzIuNjkgODkuMzUgMjExLjAxIDc3LjczIDIxMS4wMSIvPgogIDwvZz4KICA8Zz4KICAgIDxsaW5lIGNsYXNzPSJjbHMtMzIiIHgxPSI0NzIuNTQiIHkxPSIxMzYuNjEiIHgyPSI1MTkuODMiIHkyPSIxMzYuNjEiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMzkiIHBvaW50cz0iNTE1Ljg2IDE0Mi40MiA1MzcuNTQgMTM2LjYxIDUxNS44NiAxMzAuOCA1MTUuODYgMTQyLjQyIi8+CiAgPC9nPgogIDxnPgogICAgPHBhdGggY2xhc3M9ImNscy0yOSIgZD0iTTU1MC41NywyNTguMjhjMC0xMC43MSw2MC4zNC0xOS40NCwxMzYuMzQtMTkuOTciLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMzUiIHBvaW50cz0iNjgzLjUgMjQzLjAyIDY4NS4zOCAyMzguNCA2ODMuMzcgMjMzLjg0IDY5NC4zMSAyMzguMjggNjgzLjUgMjQzLjAyIi8+CiAgPC9nPgogIDxnPgogICAgPHBhdGggY2xhc3M9ImNscy0zMyIgZD0iTTc5NS45MywzNDYuMTZjLTE5LjIzLDIwLjg5LTEyMS43MiwxNS4yNC0yNDAuNjItMTQuNCIvPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy0zNSIgcG9pbnRzPSI3OTEuMTEgMzQ2LjUyIDc5NS4wOSAzNDcuMSA3OTcuNDQgMzUwLjM3IDc5OC44NCAzNDAuOTUgNzkxLjExIDM0Ni41MiIvPgogIDwvZz4KPC9zdmc+" alt="Module 1 workflow for preparing multiomic data, processing footprint evidence, and predicting TF binding sites." width="100%" /></p>
+<div id="inputs" class="section level3">
+<h3>Inputs</h3>
+<p>Module 1 expects:</p>
+<ul>
+<li>A merged ATAC peak master table with normalized signal and overlap
+flags.</li>
+<li>A normalized RNA-seq count or expression matrix.</li>
+<li>A directory of per-condition motif footprint score and binding
+overview files generated by TOBIAS or a TOBIAS-compatible workflow.</li>
+<li>A metadata table mapping samples to conditions.</li>
+<li>A YAML configuration file with file paths, thresholds, and genome
+settings. The TFBS workflow uses <code>threshold_fp_tf_corr_r</code>,
+and can also use optional <code>threshold_fp_tf_corr_p</code> and
+<code>threshold_fp_tf_corr_fdr</code> fields when a project should
+require p-value or adjusted p-value support.</li>
+</ul>
+<p>Supported built-in motif resources include <code>hg38</code> and
+<code>mm10</code>.</p>
+<p>For large projects, keep <code>write_stats = FALSE</code> and use
+<code>output_format = &quot;auto&quot;</code>. Module 1 keeps full correlation
+tables as audit outputs, but the primary handoff to Module 2 is
+<code>predicted_tfbs</code>: a table with only aligned canonical-bound
+FPs and the TF names predicted to bind each FP.</p>
+</div>
+<div id="run-module-1" class="section level3">
+<h3>Run Module 1</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>data_object <span class="ot">&lt;-</span> <span class="fu">load_prep_multiomic_data</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">config =</span> <span class="st">&quot;craftgrn_grn.yaml&quot;</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">genome =</span> <span class="st">&quot;hg38&quot;</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="at">gene_symbol_col =</span> <span class="st">&quot;HGNC&quot;</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>module1_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;predict_tf_binding_sites&quot;</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>module1 <span class="ot">&lt;-</span> <span class="fu">predict_tfbs</span>(</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>  data_object,</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  <span class="at">out_dir =</span> module1_dir,</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>  <span class="at">write_outputs =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  <span class="at">output_format =</span> <span class="st">&quot;auto&quot;</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>)</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>module1_qc <span class="ot">&lt;-</span> <span class="fu">build_module1_qc_report</span>(</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>  module1,</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>  <span class="at">output_dir =</span> <span class="fu">file.path</span>(module1_dir, <span class="st">&quot;reports&quot;</span>),</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>  <span class="at">scan_predicted_tfbs =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="outputs" class="section level3">
+<h3>Outputs</h3>
+<p>Module 1 creates:</p>
+<ul>
+<li>A CraftGRN multiomic object with normalized signal matrices, binary
+flags, and feature annotations.</li>
+<li><code>01_fp_scores_qn_&lt;db&gt;.csv</code>, the quantile-normalized
+footprint score matrix written for direct inspection and downstream
+external tools.</li>
+<li>Compact aligned footprint site, score, binding, and motif-support
+tables.</li>
+<li>Canonical-bound footprint summaries, including all canonical motifs
+retained for each aligned footprint.</li>
+<li><code>predicted_tfbs</code>, the FP-to-TF handoff used by Module
+2.</li>
+<li>Optional full TFBS correlation statistics for audit and
+debugging.</li>
+<li><code>module1_qc_report.html</code>: an HTML QC report summarizing
+run parameters, input gates, motif-supported canonical support,
+correlation diagnostics, chunked predicted TFBS integrity, top TFs/FPs,
+condition support, motif complexity, warning checks, and related
+artifacts. The report uses static processing funnels, density curves,
+scatter summaries, heatmaps, lollipop rank plots, and cumulative
+curves.</li>
+<li>QC summaries reporting how many FPs, motif-supported pairs,
+canonical-bound FPs, prediction pairs, and predicted TFBS rows pass each
+step.</li>
+</ul>
+</div>
+</div>
+<div id="module-2-connect-tfs-to-target-genes" class="section level2">
+<h2>Module 2: Connect TFs to target genes</h2>
+<p>Module 2 treats TF-target prediction as a relational problem. It
+joins the Module 1 <code>predicted_tfbs</code> relation with TF-target
+expression correlations, restricted FP-target correlations, TSS-window
+evidence, and optional generic regulatory-prior evidence. GeneHancer,
+HiC, promoter-capture, CRISPR enhancer screens, or user tables are all
+represented as regulatory priors rather than separate modes.</p>
+<p><img role="img" aria-label="Module 2 workflow for linking predicted TF binding sites to target genes using expression, genomic distance, and optional regulatory prior evidence." src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgMjAwIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmb250LXNpemU6IDE0cHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMSwgLmNscy0yIHsKICAgICAgICBmaWxsOiAjMmMzZTUwOwogICAgICB9CgogICAgICAuY2xzLTEsIC5jbHMtMiwgLmNscy0zLCAuY2xzLTQsIC5jbHMtNSwgLmNscy02LCAuY2xzLTcgewogICAgICAgIGlzb2xhdGlvbjogaXNvbGF0ZTsKICAgICAgfQoKICAgICAgLmNscy0xLCAuY2xzLTIsIC5jbHMtMywgLmNscy02LCAuY2xzLTcgewogICAgICAgIGZvbnQtZmFtaWx5OiBBcmlhbC1Cb2xkTVQsIEFyaWFsOwogICAgICAgIGZvbnQtd2VpZ2h0OiA3MDA7CiAgICAgIH0KCiAgICAgIC5jbHMtMiwgLmNscy0zIHsKICAgICAgICBmb250LXNpemU6IDEwcHg7CiAgICAgIH0KCiAgICAgIC5jbHMtOCB7CiAgICAgICAgc3Ryb2tlOiAjZmZmOwogICAgICB9CgogICAgICAuY2xzLTgsIC5jbHMtOSwgLmNscy0xMCwgLmNscy01LCAuY2xzLTExLCAuY2xzLTEyIHsKICAgICAgICBmaWxsOiBub25lOwogICAgICB9CgogICAgICAuY2xzLTgsIC5jbHMtMTMgewogICAgICAgIHN0cm9rZS13aWR0aDogM3B4OwogICAgICB9CgogICAgICAuY2xzLTE0IHsKICAgICAgICBmaWxsOiAjZTY3ZTIyOwogICAgICB9CgogICAgICAuY2xzLTkgewogICAgICAgIHN0cm9rZTogIzdmOGM4ZDsKICAgICAgICBzdHJva2Utd2lkdGg6IDMuMTFweDsKICAgICAgfQoKICAgICAgLmNscy0xNSB7CiAgICAgICAgbGV0dGVyLXNwYWNpbmc6IC0uMDZlbTsKICAgICAgfQoKICAgICAgLmNscy0xNiB7CiAgICAgICAgbGV0dGVyLXNwYWNpbmc6IC0uMDdlbTsKICAgICAgfQoKICAgICAgLmNscy0xNyB7CiAgICAgICAgc3Ryb2tlOiAjOTVhNWE2OwogICAgICAgIHN0cm9rZS1kYXNoYXJyYXk6IDIgMjsKICAgICAgfQoKICAgICAgLmNscy0zLCAuY2xzLTE4LCAuY2xzLTcgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KCiAgICAgIC5jbHMtMTggewogICAgICAgIHN0cm9rZTogIzJjM2U1MDsKICAgICAgfQoKICAgICAgLmNscy0xOCwgLmNscy0xMCwgLmNscy0xOSwgLmNscy0yMCwgLmNscy0xMiB7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAycHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMTAgewogICAgICAgIHN0cm9rZTogIzAwMDMwNTsKICAgICAgfQoKICAgICAgLmNscy0xOSB7CiAgICAgICAgZmlsbDogIzI3YWU2MDsKICAgICAgICBzdHJva2U6ICMyMjk5NTQ7CiAgICAgIH0KCiAgICAgIC5jbHMtMjEgewogICAgICAgIGZpbGw6ICM5YjU5YjY7CiAgICAgIH0KCiAgICAgIC5jbHMtNCB7CiAgICAgICAgb3BhY2l0eTogLjY7CiAgICAgIH0KCiAgICAgIC5jbHMtNCwgLmNscy0yMCB7CiAgICAgICAgZmlsbDogI2U3NGMzYzsKICAgICAgfQoKICAgICAgLmNscy01IHsKICAgICAgICBvcGFjaXR5OiAuNzsKICAgICAgICBzdHJva2U6ICM5YjU5YjY7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAxLjM5cHg7CiAgICAgIH0KCiAgICAgIC5jbHMtNiB7CiAgICAgICAgZmlsbDogIzdmOGM4ZDsKICAgICAgICBmb250LXNpemU6IDlweDsKICAgICAgfQoKICAgICAgLmNscy0yMiB7CiAgICAgICAgZmlsbDogIzAwMDMwNTsKICAgICAgfQoKICAgICAgLmNscy03IHsKICAgICAgICBmb250LXNpemU6IDI0cHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMTEgewogICAgICAgIHN0cm9rZS13aWR0aDogMi41cHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMTEsIC5jbHMtMTIgewogICAgICAgIHN0cm9rZTogIzI3YWU2MDsKICAgICAgfQoKICAgICAgLmNscy0xMyB7CiAgICAgICAgZmlsbDogIzRkYmJkNTsKICAgICAgICBzdHJva2U6ICMzYThlYTI7CiAgICAgIH0KCiAgICAgIC5jbHMtMjAgewogICAgICAgIHN0cm9rZTogI2MwMzkyYjsKICAgICAgfQoKICAgICAgLmNscy0xMiB7CiAgICAgICAgb3BhY2l0eTogLjU7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxjaXJjbGUgY2xhc3M9ImNscy0xMyIgY3g9IjkyLjgiIGN5PSI5Ny4wMiIgcj0iMzUiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDg2LjEyIDEwNy4wMikiPjx0c3BhbiB4PSIwIiB5PSIwIj4yPC90c3Bhbj48L3RleHQ+CiAgPHRleHQgY2xhc3M9ImNscy0xIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNzEuOCA2NC40MikiPjx0c3BhbiB4PSIwIiB5PSIwIj5Qb3RlbnRpYWwgM0QgQ2hyb21hdGluIEludGVyYWN0aW9uPC90c3Bhbj48L3RleHQ+CiAgPGxpbmUgY2xhc3M9ImNscy05IiB4MT0iMTU0LjgiIHkxPSIxMzAuNDIiIHgyPSI0NTQuOCIgeTI9IjEzMC40MiIvPgogIDxyZWN0IGNsYXNzPSJjbHMtMjAiIHg9IjE2MC44IiB5PSIxMjEuNDIiIHdpZHRoPSI1MCIgaGVpZ2h0PSIxNSIgcng9IjMiIHJ5PSIzIi8+CiAgPHRleHQgY2xhc3M9ImNscy0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNjMuMDEgMTMyLjQyKSI+PHRzcGFuIHg9IjAiIHk9IjAiPkVuaGFuY2VyPC90c3Bhbj48L3RleHQ+CiAgPGVsbGlwc2UgY2xhc3M9ImNscy00IiBjeD0iMTk1LjgiIGN5PSIxMTMuNDIiIHJ4PSI4IiByeT0iNSIvPgogIDxjaXJjbGUgY2xhc3M9ImNscy0xNCIgY3g9IjE3NS44IiBjeT0iMTEyLjQyIiByPSI3Ii8+CiAgPHJlY3QgY2xhc3M9ImNscy0xOSIgeD0iMzU1LjgiIHk9IjEyMS40MiIgd2lkdGg9IjYwIiBoZWlnaHQ9IjE1IiByeD0iMyIgcnk9IjMiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM2My41NyAxMzIuNDIpIj48dHNwYW4geD0iMCIgeT0iMCI+UHJvbW90ZXI8L3RzcGFuPjwvdGV4dD4KICA8cGF0aCBjbGFzcz0iY2xzLTE5IiBkPSJNNDE1LjgsMTE4LjkyaDQ1di03LjVsMTUsNy41LTE1LDcuNXYtNy41Ii8+CiAgPHBhdGggY2xhc3M9ImNscy01IiBkPSJNMTg1LjgsMTA3LjkyYzY2LjY3LTQwLDEzMy4zMy00MCwyMDAsMCIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMTciIGQ9Ik0yMDUuOCwxNDEuNDJoMTYwIi8+CiAgPHRleHQgY2xhc3M9ImNscy02IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNDAuNjQgMTU2LjQyKSI+PHRzcGFuIHg9IjAiIHk9IjAiPn4xMDBrYiBsaW5lYXIgZGlzdGFuY2U8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzMS44IDY3LjcxKSI+PHRzcGFuIHg9IjAiIHk9IjAiPkNvbmNvcmRhbmNlIEZpbHRlcjwvdHNwYW4+PC90ZXh0PgogIDxnPgogICAgPHRleHQgY2xhc3M9ImNscy0xIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2ODEuNzQgMTE0Ljc2KSI+PHRzcGFuIHg9IjAiIHk9IjAiPiZhbXA7PC90c3Bhbj48L3RleHQ+CiAgICA8cmVjdCBjbGFzcz0iY2xzLTE4IiB4PSI1OTYuOCIgeT0iODQuNzYiIHdpZHRoPSI3MCIgaGVpZ2h0PSI1NSIvPgogICAgPGNpcmNsZSBjbGFzcz0iY2xzLTE0IiBjeD0iNjA4LjgiIGN5PSIxMjYuNzYiIHI9IjIuNSIvPgogICAgPGNpcmNsZSBjbGFzcz0iY2xzLTE0IiBjeD0iNjE2LjgiIGN5PSIxMjIuNzYiIHI9IjIuNSIvPgogICAgPGNpcmNsZSBjbGFzcz0iY2xzLTE0IiBjeD0iNjI0LjgiIGN5PSIxMTQuNzYiIHI9IjIuNSIvPgogICAgPGNpcmNsZSBjbGFzcz0iY2xzLTE0IiBjeD0iNjM0LjgiIGN5PSIxMDcuNzYiIHI9IjIuNSIvPgogICAgPGNpcmNsZSBjbGFzcz0iY2xzLTE0IiBjeD0iNjQ0LjgiIGN5PSI5OS43NiIgcj0iMi41Ii8+CiAgICA8Y2lyY2xlIGNsYXNzPSJjbHMtMTQiIGN4PSI2NTQuOCIgY3k9Ijk0Ljc2IiByPSIyLjUiLz4KICAgIDxsaW5lIGNsYXNzPSJjbHMtMTIiIHgxPSI2MDAuOCIgeTE9IjEzNC43NiIgeDI9IjY1NC44IiB5Mj0iOTMuNzYiLz4KICAgIDx0ZXh0IGNsYXNzPSJjbHMtMiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjA4Ljc5IDE1Mi43NikiPjx0c3BhbiB4PSIwIiB5PSIwIj5URuKGlDwvdHNwYW4+PHRzcGFuIGNsYXNzPSJjbHMtMTYiIHg9IjIyLjIyIiB5PSIwIj5UPC90c3Bhbj48dHNwYW4geD0iMjcuNTgiIHk9IjAiPmFyZ2V0PC90c3Bhbj48L3RleHQ+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTExIiBkPSJNNjU4LjgsODcuNzZsMywzLDUtOCIvPgogICAgPHJlY3QgY2xhc3M9ImNscy0xOCIgeD0iNzA2LjgiIHk9Ijg0Ljc2IiB3aWR0aD0iNzAiIGhlaWdodD0iNTUiLz4KICAgIDxjaXJjbGUgY2xhc3M9ImNscy0yMSIgY3g9IjcxOC44IiBjeT0iMTI0Ljc2IiByPSIyLjUiLz4KICAgIDxjaXJjbGUgY2xhc3M9ImNscy0yMSIgY3g9IjcyNi44IiBjeT0iMTIwLjc2IiByPSIyLjUiLz4KICAgIDxjaXJjbGUgY2xhc3M9ImNscy0yMSIgY3g9IjczNC44IiBjeT0iMTE2Ljc2IiByPSIyLjUiLz4KICAgIDxjaXJjbGUgY2xhc3M9ImNscy0yMSIgY3g9Ijc0NC44IiBjeT0iMTA4Ljc2IiByPSIyLjUiLz4KICAgIDxjaXJjbGUgY2xhc3M9ImNscy0yMSIgY3g9Ijc1NC44IiBjeT0iMTAxLjc2IiByPSIyLjUiLz4KICAgIDxjaXJjbGUgY2xhc3M9ImNscy0yMSIgY3g9Ijc2NC44IiBjeT0iOTYuNzYiIHI9IjIuNSIvPgogICAgPGxpbmUgY2xhc3M9ImNscy0xMiIgeDE9IjcxNC44IiB5MT0iMTI5Ljc2IiB4Mj0iNzY4LjgiIHkyPSI5Mi43NiIvPgogICAgPHRleHQgY2xhc3M9ImNscy0yIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2OTkuNTMgMTUyLjc2KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkZvb3RwcmludOKGlDwvdHNwYW4+PHRzcGFuIGNsYXNzPSJjbHMtMTYiIHg9IjUzLjg3IiB5PSIwIj5UPC90c3Bhbj48dHNwYW4geD0iNTkuMjQiIHk9IjAiPmFyZ2V0PC90c3Bhbj48L3RleHQ+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTExIiBkPSJNNzY4LjgsODcuNzZsMywzLDUtOCIvPgogICAgPGNpcmNsZSBjbGFzcz0iY2xzLTE5IiBjeD0iODQ2LjgiIGN5PSIxMTQuNzYiIHI9IjE4Ii8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTgiIGQ9Ik04NDAuOCwxMTQuNzZsNCw0LDgtMTAiLz4KICAgIDx0ZXh0IGNsYXNzPSJjbHMtMiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODIzLjQ2IDE1Mi42MykiPjx0c3BhbiBjbGFzcz0iY2xzLTE1IiB4PSIwIiB5PSIwIj5WPC90c3Bhbj48dHNwYW4geD0iNi4xMiIgeT0iMCI+YWxpZCBMaW5rPC90c3Bhbj48L3RleHQ+CiAgPC9nPgogIDxsaW5lIGNsYXNzPSJjbHMtMTkiIHgxPSI0MTYuOCIgeTE9IjEyOS40MiIgeDI9IjQxNi44IiB5Mj0iMTE5LjQyIi8+CiAgPHRleHQgY2xhc3M9ImNscy0yIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MjAuODkgMTAyLjQyKSI+PHRzcGFuIGNsYXNzPSJjbHMtMTYiIHg9IjAiIHk9IjAiPlQ8L3RzcGFuPjx0c3BhbiB4PSI1LjM3IiB5PSIwIj5hcmdldDwvdHNwYW4+PHRzcGFuIHg9IjIuNCIgeT0iMTIiPkdlbmU8L3RzcGFuPjwvdGV4dD4KICA8Zz4KICAgIDxsaW5lIGNsYXNzPSJjbHMtMTAiIHgxPSI1MDQuMyIgeTE9IjExMi40MiIgeDI9IjU1MS41OCIgeTI9IjExMi40MiIvPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy0yMiIgcG9pbnRzPSI1NDcuNjIgMTE4LjIzIDU2OS4zIDExMi40MiA1NDcuNjIgMTA2LjYgNTQ3LjYyIDExOC4yMyIvPgogIDwvZz4KPC9zdmc+" alt="Module 2 workflow for linking predicted TF binding sites to target genes using expression, genomic distance, and optional regulatory prior evidence." width="100%" /></p>
+<div id="inputs-1" class="section level3">
+<h3>Inputs</h3>
+<p>Module 2 uses:</p>
+<ul>
+<li>The CraftGRN multiomic object generated by Module 1.</li>
+<li><code>predicted_tfbs</code>, with one row per predicted FP-TF
+binding event.</li>
+<li>A target gene TSS annotation table.</li>
+<li>Optional generic regulatory-prior FP-target links.</li>
+<li>YAML thresholds for TF-target and FP-target correlation
+filtering.</li>
+</ul>
+</div>
+<div id="process" class="section level3">
+<h3>Process</h3>
+<p>Module 2 first computes TF expression to target expression
+correlations and filters TF-target pairs. Only after that filter does it
+build FP-target candidates from FPs bound by the surviving TFs. FP score
+to target expression correlations are computed only for those restricted
+FP-target candidates within the TSS window or supported by regulatory
+prior evidence.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>module2 <span class="ot">&lt;-</span> <span class="fu">predict_tf_targets</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="at">multiomic_data =</span> module1<span class="sc">$</span>omics_data,</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="at">predicted_tfbs =</span> module1<span class="sc">$</span>predicted_tfbs,</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="at">gene_tss =</span> gene_tss,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="at">regulatory_prior =</span> regulatory_prior,</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="at">project_config =</span> <span class="st">&quot;project.yaml&quot;</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  <span class="at">output_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;connect_tf_target_genes&quot;</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>)</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>hnf4a_links <span class="ot">&lt;-</span> <span class="fu">query_predicted_links</span>(module2, <span class="at">tf =</span> <span class="st">&quot;HNF4A&quot;</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>module2_qc <span class="ot">&lt;-</span> <span class="fu">build_module2_qc_report</span>(</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>  module2,</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>  <span class="at">multiomic_data =</span> module1<span class="sc">$</span>omics_data,</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>  <span class="at">output_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;connect_tf_target_genes&quot;</span>, <span class="st">&quot;reports&quot;</span>),</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>  <span class="at">scan_large_tables =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>  <span class="at">validate_integrity =</span> <span class="cn">TRUE</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="outputs-1" class="section level3">
+<h3>Outputs</h3>
+<p>Module 2 produces normalized tables:</p>
+<ul>
+<li><code>module2_tf_target_corr</code>: one row per TF-target
+correlation.</li>
+<li><code>module2_fp_target_candidates</code>: one row per FP-target
+candidate with distance-to-TSS and prior evidence.</li>
+<li><code>module2_fp_target_corr</code>: one row per FP-target
+correlation.</li>
+<li><code>module2_links</code>: final TF-FP-target links as keys and
+pass flags.</li>
+<li><code>module2_condition_activity</code>: long condition-level
+activity flags.</li>
+<li><code>module2_qc_summary</code>: counts before and after each
+filter.</li>
+<li><code>module2_qc_report.html</code>: an HTML QC report summarizing
+handoff checks, TF-target and FP-target correlation filters, FP-target
+candidate source and distance-to-TSS evidence, final-link integrity
+checks, condition activity, warning checks, top TF/target/FP summaries,
+output manifests, and related HTML browser reports. The report uses
+relational flow diagrams, density and cumulative distance plots, scatter
+summaries, heatmaps, and lollipop rank plots.</li>
+</ul>
+</div>
+</div>
+<div id="module-3-learn-regulatory-topics-and-visualize-differential-grns" class="section level2">
+<h2>Module 3: Learn regulatory topics and visualize differential
+GRNs</h2>
+<p>Module 3 compares regulatory links between conditions, builds joint
+RNA and footprint document-term matrices, trains topic models, assigns
+links to topics, and summarizes topic-specific pathway and master TF
+programs.</p>
+<p><img role="img" aria-label="Module 3 workflow for comparing regulatory links, training topic models, and summarizing differential GRN programs." src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xLCAuY2xzLTIsIC5jbHMtMywgLmNscy00LCAuY2xzLTUsIC5jbHMtNiwgLmNscy03LCAuY2xzLTgsIC5jbHMtOSwgLmNscy0xMCwgLmNscy0xMSwgLmNscy0xMiwgLmNscy0xMywgLmNscy0xNCwgLmNscy0xNSwgLmNscy0xNiB7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAycHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMSwgLmNscy0xNywgLmNscy05LCAuY2xzLTEyIHsKICAgICAgICBmaWxsOiAjMzQ5OGRiOwogICAgICB9CgogICAgICAuY2xzLTEsIC5jbHMtOSwgLmNscy0xMiB7CiAgICAgICAgc3Ryb2tlOiAjMjk4MGI5OwogICAgICB9CgogICAgICAuY2xzLTE4IHsKICAgICAgICBmb250LXNpemU6IDE0cHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMTgsIC5jbHMtMywgLmNscy0xOSwgLmNscy0yMCwgLmNscy03LCAuY2xzLTIxLCAuY2xzLTksIC5jbHMtMjIsIC5jbHMtMjMsIC5jbHMtMjQsIC5jbHMtMjUsIC5jbHMtMjYsIC5jbHMtMTIsIC5jbHMtMjcsIC5jbHMtMTMsIC5jbHMtMjgsIC5jbHMtMjksIC5jbHMtMTYsIC5jbHMtMzAgewogICAgICAgIGlzb2xhdGlvbjogaXNvbGF0ZTsKICAgICAgfQoKICAgICAgLmNscy0xOCwgLmNscy0yMiwgLmNscy0yMywgLmNscy0yNCwgLmNscy0yNSwgLmNscy0yNywgLmNscy0yOCwgLmNscy0yOSwgLmNscy0zMCB7CiAgICAgICAgZm9udC1mYW1pbHk6IEFyaWFsLUJvbGRNVCwgQXJpYWw7CiAgICAgICAgZm9udC13ZWlnaHQ6IDcwMDsKICAgICAgfQoKICAgICAgLmNscy0xOCwgLmNscy0yNCB7CiAgICAgICAgZmlsbDogIzJjM2U1MDsKICAgICAgfQoKICAgICAgLmNscy0zMSB7CiAgICAgICAgZmlsbDogI2YxYzQwZjsKICAgICAgfQoKICAgICAgLmNscy0yIHsKICAgICAgICBmaWxsOiAjY2Q3ZjMyOwogICAgICAgIHN0cm9rZTogc2llbm5hOwogICAgICB9CgogICAgICAuY2xzLTMsIC5jbHMtMzIsIC5jbHMtMzMgewogICAgICAgIGZpbGw6ICNlNzRjM2M7CiAgICAgIH0KCiAgICAgIC5jbHMtMywgLmNscy0xMiwgLmNscy0xNiB7CiAgICAgICAgb3BhY2l0eTogLjc7CiAgICAgIH0KCiAgICAgIC5jbHMtMywgLmNscy0zMyB7CiAgICAgICAgc3Ryb2tlOiAjYzAzOTJiOwogICAgICB9CgogICAgICAuY2xzLTM0LCAuY2xzLTYsIC5jbHMtNyB7CiAgICAgICAgc3Ryb2tlOiAjZTY3ZTIyOwogICAgICB9CgogICAgICAuY2xzLTM0LCAuY2xzLTYsIC5jbHMtNywgLmNscy0zNSB7CiAgICAgICAgZmlsbDogI2YzOWMxMjsKICAgICAgfQoKICAgICAgLmNscy0zNiwgLmNscy0yMCB7CiAgICAgICAgZmlsbDogI2U2N2UyMjsKICAgICAgfQoKICAgICAgLmNscy0xOSwgLmNscy0yMCwgLmNscy0yNiB7CiAgICAgICAgb3BhY2l0eTogLjQ7CiAgICAgIH0KCiAgICAgIC5jbHMtMTksIC5jbHMtMzcsIC5jbHMtMTEsIC5jbHMtMTMsIC5jbHMtMTYgewogICAgICAgIGZpbGw6ICMyN2FlNjA7CiAgICAgIH0KCiAgICAgIC5jbHMtNCB7CiAgICAgICAgc3Ryb2tlOiAjMzQ0OTVlOwogICAgICB9CgogICAgICAuY2xzLTQsIC5jbHMtMjEsIC5jbHMtMzgsIC5jbHMtMTAsIC5jbHMtMzkgewogICAgICAgIGZpbGw6IG5vbmU7CiAgICAgIH0KCiAgICAgIC5jbHMtNDAgewogICAgICAgIGZpbGw6ICMwMGEwODc7CiAgICAgICAgc3Ryb2tlOiAjMDA2ZDViOwogICAgICB9CgogICAgICAuY2xzLTQwLCAuY2xzLTM4LCAuY2xzLTMzIHsKICAgICAgICBzdHJva2Utd2lkdGg6IDNweDsKICAgICAgfQoKICAgICAgLmNscy01IHsKICAgICAgICBmaWxsOiAjZWNmMGYxOwogICAgICAgIHN0cm9rZTogI2JkYzNjNzsKICAgICAgfQoKICAgICAgLmNscy03LCAuY2xzLTIxIHsKICAgICAgICBvcGFjaXR5OiAuNTsKICAgICAgfQoKICAgICAgLmNscy0yMSwgLmNscy04IHsKICAgICAgICBzdHJva2U6ICM5NWE1YTY7CiAgICAgIH0KCiAgICAgIC5jbHMtOCB7CiAgICAgICAgZmlsbDogI2JkYzNjNzsKICAgICAgfQoKICAgICAgLmNscy00MSB7CiAgICAgICAgbGV0dGVyLXNwYWNpbmc6IC0uMDdlbTsKICAgICAgfQoKICAgICAgLmNscy05LCAuY2xzLTEzIHsKICAgICAgICBvcGFjaXR5OiAuMzsKICAgICAgfQoKICAgICAgLmNscy00MiB7CiAgICAgICAgZmlsbDogI2U1MjMyZDsKICAgICAgfQoKICAgICAgLmNscy0zOCB7CiAgICAgICAgc3Ryb2tlOiAjMmMzZTUwOwogICAgICB9CgogICAgICAuY2xzLTIyIHsKICAgICAgICBmb250LXNpemU6IDEwcHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMjIsIC5jbHMtMjMsIC5jbHMtMjUsIC5jbHMtMjgsIC5jbHMtMjksIC5jbHMtMzAgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KCiAgICAgIC5jbHMtMjMgewogICAgICAgIGZvbnQtc2l6ZTogMzZweDsKICAgICAgfQoKICAgICAgLmNscy0xMCwgLmNscy0zOSB7CiAgICAgICAgc3Ryb2tlOiAjMDAwMzA1OwogICAgICB9CgogICAgICAuY2xzLTQzIHsKICAgICAgICBmaWxsOiAjMzQ0OTVlOwogICAgICB9CgogICAgICAuY2xzLTI0LCAuY2xzLTI3IHsKICAgICAgICBmb250LXNpemU6IDEycHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMTEsIC5jbHMtMTMsIC5jbHMtMTYgewogICAgICAgIHN0cm9rZTogIzIyOTk1NDsKICAgICAgfQoKICAgICAgLmNscy0zOSB7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAxLjQ3cHg7CiAgICAgIH0KCiAgICAgIC5jbHMtNDQsIC5jbHMtMjYsIC5jbHMtMTQgewogICAgICAgIGZpbGw6ICM5YjU5YjY7CiAgICAgIH0KCiAgICAgIC5jbHMtNDUgewogICAgICAgIGxldHRlci1zcGFjaW5nOiAtLjAyZW07CiAgICAgIH0KCiAgICAgIC5jbHMtMjUgewogICAgICAgIGZvbnQtc2l6ZTogMTZweDsKICAgICAgfQoKICAgICAgLmNscy00NiB7CiAgICAgICAgZmlsbDogIzU3NTc4NDsKICAgICAgfQoKICAgICAgLmNscy0yNyB7CiAgICAgICAgZmlsbDogIzVkNjg2ODsKICAgICAgfQoKICAgICAgLmNscy0yOCB7CiAgICAgICAgZm9udC1zaXplOiAxMXB4OwogICAgICB9CgogICAgICAuY2xzLTQ3IHsKICAgICAgICBmaWxsOiAjMDAwMzA1OwogICAgICB9CgogICAgICAuY2xzLTI5IHsKICAgICAgICBmb250LXNpemU6IDI0cHg7CiAgICAgIH0KCiAgICAgIC5jbHMtNDggewogICAgICAgIGxldHRlci1zcGFjaW5nOiAtLjA0ZW07CiAgICAgIH0KCiAgICAgIC5jbHMtMTQgewogICAgICAgIHN0cm9rZTogIzhlNDRhZDsKICAgICAgfQoKICAgICAgLmNscy0xNSB7CiAgICAgICAgZmlsbDogIzNjNTQ4ODsKICAgICAgICBzdHJva2U6ICMyNTM0NTU7CiAgICAgIH0KCiAgICAgIC5jbHMtMzAgewogICAgICAgIGZvbnQtc2l6ZTogMThweDsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPGNpcmNsZSBjbGFzcz0iY2xzLTQwIiBjeD0iODkuNzUiIGN5PSIxMDQuOTYiIHI9IjM1Ii8+CiAgPHRleHQgY2xhc3M9ImNscy0yOSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzcuMDggMTEzLjk2KSI+PHRzcGFuIHg9IjAiIHk9IjAiPjNhPC90c3Bhbj48L3RleHQ+CiAgPGNpcmNsZSBjbGFzcz0iY2xzLTM2IiBjeD0iMjU0Ljc1IiBjeT0iODQuOTgiIHI9IjE1Ii8+CiAgPHRleHQgY2xhc3M9ImNscy0yMiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjQ4LjY1IDg4LjU2KSI+PHRzcGFuIHg9IjAiIHk9IjAiPlRGPC90c3Bhbj48L3RleHQ+CiAgPHBhdGggY2xhc3M9ImNscy00NCIgZD0iTTMxNiw3NC45OGgyMWMyLjQ5LDAsNC41LDEuMzQsNC41LDN2MTRjMCwxLjY2LTIuMDEsMy00LjUsM2gtMjFjLTIuNDksMC00LjUtMS4zNC00LjUtM3YtMTRjMC0xLjY2LDIuMDEtMyw0LjUtM1oiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTIyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMTMuNTggODguNTYpIj48dHNwYW4geD0iMCIgeT0iMCI+VEZCUzwvdHNwYW4+PC90ZXh0PgogIDxlbGxpcHNlIGNsYXNzPSJjbHMtMzciIGN4PSI0MDQuMDMiIGN5PSI4NC45OCIgcng9IjIwIiByeT0iMTUiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTIyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzODkuMDggODcuNTEpIj48dHNwYW4gY2xhc3M9ImNscy00MSIgeD0iMCIgeT0iMCI+VDwvdHNwYW4+PHRzcGFuIHg9IjUuMzciIHk9IjAiPmFyZ2V0PC90c3Bhbj48L3RleHQ+CiAgPGNpcmNsZSBjbGFzcz0iY2xzLTIwIiBjeD0iMjU0Ljc1IiBjeT0iMTMzLjU2IiByPSIxNSIvPgogIDx0ZXh0IGNsYXNzPSJjbHMtMjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI0OC42NSAxMzguNTYpIj48dHNwYW4geD0iMCIgeT0iMCI+VEY8L3RzcGFuPjwvdGV4dD4KICA8cGF0aCBjbGFzcz0iY2xzLTI2IiBkPSJNMzE2LDEyMy41NmgyMWMyLjQ5LDAsNC41LDEuMzQsNC41LDN2MTRjMCwxLjY2LTIuMDEsMy00LjUsM2gtMjFjLTIuNDksMC00LjUtMS4zNC00LjUtM3YtMTRjMC0xLjY2LDIuMDEtMyw0LjUtM1oiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTIyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMTMuNTggMTM2LjU2KSI+PHRzcGFuIHg9IjAiIHk9IjAiPlRGQlM8L3RzcGFuPjwvdGV4dD4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTE5IiBjeD0iNDA0LjAzIiBjeT0iMTMzLjU2IiByeD0iMjAiIHJ5PSIxNSIvPgogIDx0ZXh0IGNsYXNzPSJjbHMtMjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM4OS4wOCAxMzguNTYpIj48dHNwYW4gY2xhc3M9ImNscy00MSIgeD0iMCIgeT0iMCI+VDwvdHNwYW4+PHRzcGFuIHg9IjUuMzciIHk9IjAiPmFyZ2V0PC90c3Bhbj48L3RleHQ+CiAgPGc+CiAgICA8Y2lyY2xlIGNsYXNzPSJjbHMtMzMiIGN4PSI0NjYuNzUiIGN5PSIxMDYuNTYiIHI9IjMwIi8+CiAgICA8dGV4dCBjbGFzcz0iY2xzLTIzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0NTMuODIgMTE4LjU2KSI+PHRzcGFuIHg9IjAiIHk9IjAiPs6UPC90c3Bhbj48L3RleHQ+CiAgPC9nPgogIDxjaXJjbGUgY2xhc3M9ImNscy00MCIgY3g9Ijg5Ljc1IiBjeT0iMjc3Ljc2IiByPSIzNSIvPgogIDx0ZXh0IGNsYXNzPSJjbHMtMjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc3LjA4IDI4Ny43NikiPjx0c3BhbiB4PSIwIiB5PSIwIj4zYjwvdHNwYW4+PC90ZXh0PgogIDxnPgogICAgPHRleHQgY2xhc3M9ImNscy0xOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjI5Ljc1IDIyNS41NikiPjx0c3BhbiB4PSIwIiB5PSIwIj5NTDwvdHNwYW4+PHRzcGFuIGNsYXNzPSJjbHMtNDUiIHg9IjIwLjIxIiB5PSIwIj5QPC90c3Bhbj48L3RleHQ+CiAgICA8Y2lyY2xlIGNsYXNzPSJjbHMtMSIgY3g9IjE4OS43NSIgY3k9IjI1NS41NiIgcj0iOCIvPgogICAgPGNpcmNsZSBjbGFzcz0iY2xzLTEiIGN4PSIxODkuNzUiIGN5PSIyODUuNTYiIHI9IjgiLz4KICAgIDxjaXJjbGUgY2xhc3M9ImNscy0xIiBjeD0iMTg5Ljc1IiBjeT0iMzE1LjU2IiByPSI4Ii8+CiAgICA8Y2lyY2xlIGNsYXNzPSJjbHMtMTQiIGN4PSIyNDkuNzUiIGN5PSIyNDUuNTYiIHI9IjgiLz4KICAgIDxjaXJjbGUgY2xhc3M9ImNscy0xNCIgY3g9IjI0OS43NSIgY3k9IjI3MC41NiIgcj0iOCIvPgogICAgPGNpcmNsZSBjbGFzcz0iY2xzLTE0IiBjeD0iMjQ5Ljc1IiBjeT0iMjk1LjU2IiByPSI4Ii8+CiAgICA8Y2lyY2xlIGNsYXNzPSJjbHMtMTQiIGN4PSIyNDkuNzUiIGN5PSIzMjAuNTYiIHI9IjgiLz4KICAgIDxjaXJjbGUgY2xhc3M9ImNscy0xMSIgY3g9IjMwOS43NSIgY3k9IjI2NS41NiIgcj0iOCIvPgogICAgPGNpcmNsZSBjbGFzcz0iY2xzLTExIiBjeD0iMzA5Ljc1IiBjeT0iMjk1LjU2IiByPSI4Ii8+CiAgICA8bGluZSBjbGFzcz0iY2xzLTIxIiB4MT0iMTk3Ljc1IiB5MT0iMjU1LjU2IiB4Mj0iMjQxLjc1IiB5Mj0iMjQ1LjU2Ii8+CiAgICA8bGluZSBjbGFzcz0iY2xzLTIxIiB4MT0iMTk3Ljc1IiB5MT0iMjU1LjU2IiB4Mj0iMjQxLjc1IiB5Mj0iMjcwLjU2Ii8+CiAgICA8bGluZSBjbGFzcz0iY2xzLTIxIiB4MT0iMTk3Ljc1IiB5MT0iMjg1LjU2IiB4Mj0iMjQxLjc1IiB5Mj0iMjcwLjU2Ii8+CiAgICA8bGluZSBjbGFzcz0iY2xzLTIxIiB4MT0iMTk3Ljc1IiB5MT0iMjg1LjU2IiB4Mj0iMjQxLjc1IiB5Mj0iMjk1LjU2Ii8+CiAgICA8bGluZSBjbGFzcz0iY2xzLTIxIiB4MT0iMTk3Ljc1IiB5MT0iMzE1LjU2IiB4Mj0iMjQxLjc1IiB5Mj0iMjk1LjU2Ii8+CiAgICA8bGluZSBjbGFzcz0iY2xzLTIxIiB4MT0iMTk3Ljc1IiB5MT0iMzE1LjU2IiB4Mj0iMjQxLjc1IiB5Mj0iMzIwLjU2Ii8+CiAgICA8bGluZSBjbGFzcz0iY2xzLTIxIiB4MT0iMjU3Ljc1IiB5MT0iMjQ1LjU2IiB4Mj0iMzAxLjc1IiB5Mj0iMjY1LjU2Ii8+CiAgICA8bGluZSBjbGFzcz0iY2xzLTIxIiB4MT0iMjU3Ljc1IiB5MT0iMjcwLjU2IiB4Mj0iMzAxLjc1IiB5Mj0iMjY1LjU2Ii8+CiAgICA8bGluZSBjbGFzcz0iY2xzLTIxIiB4MT0iMjU3Ljc1IiB5MT0iMjk1LjU2IiB4Mj0iMzAxLjc1IiB5Mj0iMjk1LjU2Ii8+CiAgICA8bGluZSBjbGFzcz0iY2xzLTIxIiB4MT0iMjU3Ljc1IiB5MT0iMzIwLjU2IiB4Mj0iMzAxLjc1IiB5Mj0iMjk1LjU2Ii8+CiAgPC9nPgogIDxnPgogICAgPGNpcmNsZSBjbGFzcz0iY2xzLTUiIGN4PSIzNDkuNzUiIGN5PSIyODUuNTYiIHI9IjIwIi8+CiAgICA8bGluZSBjbGFzcz0iY2xzLTM4IiB4MT0iMzM5Ljc1IiB5MT0iMjg1LjU2IiB4Mj0iMzU5Ljc1IiB5Mj0iMjg1LjU2Ii8+CiAgICA8bGluZSBjbGFzcz0iY2xzLTM4IiB4MT0iMzQ5Ljc1IiB5MT0iMjc1LjU2IiB4Mj0iMzQ5Ljc1IiB5Mj0iMjk1LjU2Ii8+CiAgPC9nPgogIDx0ZXh0IGNsYXNzPSJjbHMtMTgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUwOS43NSAyMzUuNTYpIj48dHNwYW4gY2xhc3M9ImNscy00MSIgeD0iMCIgeT0iMCI+VjwvdHNwYW4+PHRzcGFuIHg9IjguMyIgeT0iMCI+QUU8L3RzcGFuPjwvdGV4dD4KICA8cmVjdCBjbGFzcz0iY2xzLTkiIHg9IjQxOS43NSIgeT0iMjQ1LjU2IiB3aWR0aD0iNjAiIGhlaWdodD0iODAiIHJ4PSI1IiByeT0iNSIvPgogIDx0ZXh0IGNsYXNzPSJjbHMtMjQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQyOC44OSAyOTAuNTYpIj48dHNwYW4geD0iMCIgeT0iMCI+RW5jb2RlPC90c3Bhbj48L3RleHQ+CiAgPGNpcmNsZSBjbGFzcz0iY2xzLTciIGN4PSI1MjQuNzUiIGN5PSIyODUuNTYiIHI9IjI1Ii8+CiAgPHRleHQgY2xhc3M9ImNscy0yNCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTA4LjI1IDI5MC41NikiPjx0c3BhbiB4PSIwIiB5PSIwIj5MYXRlbnQ8L3RzcGFuPjwvdGV4dD4KICA8cmVjdCBjbGFzcz0iY2xzLTEzIiB4PSI1NjkuNzUiIHk9IjI0NS41NiIgd2lkdGg9IjYwIiBoZWlnaHQ9IjgwIiByeD0iNSIgcnk9IjUiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTI0IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1NzkuODkgMjkwLjU2KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkRlY29kZTwvdHNwYW4+PC90ZXh0PgogIDxwb2x5Z29uIGNsYXNzPSJjbHMtNDMiIHBvaW50cz0iNDg1Ljc1IDI4MC41NiA0OTkuNzUgMjg1LjU2IDQ4NS43NSAyOTAuNTYgNDg1Ljc1IDI4MC41NiIvPgogIDxwb2x5Z29uIGNsYXNzPSJjbHMtNDMiIHBvaW50cz0iNTU1Ljc1IDI4MC41NiA1NjkuNzUgMjg1LjU2IDU1NS43NSAyOTAuNTYgNTU1Ljc1IDI4MC41NiIvPgogIDx0ZXh0IGNsYXNzPSJjbHMtMTgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc3My43NSAyMzUuNTYpIj48dHNwYW4gY2xhc3M9ImNscy00MSIgeD0iMCIgeT0iMCI+VDwvdHNwYW4+PHRzcGFuIHg9IjcuNTEiIHk9IjAiPm9waWNzPC90c3Bhbj48L3RleHQ+CiAgPGNpcmNsZSBjbGFzcz0iY2xzLTMiIGN4PSI3NjkuNzUiIGN5PSIyNjUuNTYiIHI9IjE4Ii8+CiAgPHRleHQgY2xhc3M9ImNscy0yOCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzYzLjMzIDI3MS41NikiPjx0c3BhbiB4PSIwIiB5PSIwIj5UMTwvdHNwYW4+PC90ZXh0PgogIDxjaXJjbGUgY2xhc3M9ImNscy0xMiIgY3g9IjgxOS43NSIgY3k9IjI2NS41NiIgcj0iMTgiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTI4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4MTMuMzMgMjcxLjU2KSI+PHRzcGFuIHg9IjAiIHk9IjAiPlQyPC90c3Bhbj48L3RleHQ+CiAgPGNpcmNsZSBjbGFzcz0iY2xzLTE2IiBjeD0iNzk0Ljc1IiBjeT0iMzA1LjU2IiByPSIxOCIvPgogIDx0ZXh0IGNsYXNzPSJjbHMtMjgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc4OC4zMyAzMTEuNTYpIj48dHNwYW4geD0iMCIgeT0iMCI+VDM8L3RzcGFuPjwvdGV4dD4KICA8Y2lyY2xlIGNsYXNzPSJjbHMtNDAiIGN4PSI4OS43NSIgY3k9IjQ1MC41NiIgcj0iMzUiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTI5IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3Ny4wOCA0NjAuNTYpIj48dHNwYW4geD0iMCIgeT0iMCI+M2M8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTE4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMDIuNzUgMzk5LjU2KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkdSTiBOZXR3b3JrczwvdHNwYW4+PC90ZXh0PgogIDxjaXJjbGUgY2xhc3M9ImNscy0xNSIgY3g9IjI0NS43NSIgY3k9IjQ2OS41NiIgcj0iMTIiLz4KICA8Y2lyY2xlIGNsYXNzPSJjbHMtMTUiIGN4PSIyMDUuNzUiIGN5PSI0MzkuNTYiIHI9IjEwIi8+CiAgPGNpcmNsZSBjbGFzcz0iY2xzLTE1IiBjeD0iMjg1Ljc1IiBjeT0iNDM5LjU2IiByPSIxMCIvPgogIDxjaXJjbGUgY2xhc3M9ImNscy0xNSIgY3g9IjE5NS43NSIgY3k9IjQ4OS41NiIgcj0iMTAiLz4KICA8Y2lyY2xlIGNsYXNzPSJjbHMtMTUiIGN4PSIyOTUuNzUiIGN5PSI0ODkuNTYiIHI9IjEwIi8+CiAgPGNpcmNsZSBjbGFzcz0iY2xzLTE1IiBjeD0iMjI1Ljc1IiBjeT0iNTA5LjU2IiByPSIxMCIvPgogIDxjaXJjbGUgY2xhc3M9ImNscy0xNSIgY3g9IjI2NS43NSIgY3k9IjUwOS41NiIgcj0iMTAiLz4KICA8bGluZSBjbGFzcz0iY2xzLTQ2IiB4MT0iMjQ1Ljc1IiB5MT0iNDY5LjU2IiB4Mj0iMjA1Ljc1IiB5Mj0iNDM5LjU2Ii8+CiAgPGxpbmUgY2xhc3M9ImNscy00NiIgeDE9IjI0NS43NSIgeTE9IjQ2OS41NiIgeDI9IjI4NS43NSIgeTI9IjQzOS41NiIvPgogIDxsaW5lIGNsYXNzPSJjbHMtNDYiIHgxPSIyNDUuNzUiIHkxPSI0NjkuNTYiIHgyPSIxOTUuNzUiIHkyPSI0ODkuNTYiLz4KICA8bGluZSBjbGFzcz0iY2xzLTQ2IiB4MT0iMjQ1Ljc1IiB5MT0iNDY5LjU2IiB4Mj0iMjI1Ljc1IiB5Mj0iNTA5LjU2Ii8+CiAgPGxpbmUgY2xhc3M9ImNscy00NiIgeDE9IjI0NS43NSIgeTE9IjQ2OS41NiIgeDI9IjI2NS43NSIgeTI9IjUwOS41NiIvPgogIDx0ZXh0IGNsYXNzPSJjbHMtMTgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM4NC43NSAzOTkuNTYpIj48dHNwYW4geD0iMCIgeT0iMCI+RW5yaWNobWVudDwvdHNwYW4+PC90ZXh0PgogIDxyZWN0IGNsYXNzPSJjbHMtMzIiIHg9IjM2Ny43NSIgeT0iNDA5LjU2IiB3aWR0aD0iMjUiIGhlaWdodD0iMjUiLz4KICA8cmVjdCBjbGFzcz0iY2xzLTM1IiB4PSIzOTcuNzUiIHk9IjQwOS41NiIgd2lkdGg9IjI1IiBoZWlnaHQ9IjI1Ii8+CiAgPHJlY3QgY2xhc3M9ImNscy0zMSIgeD0iNDI3Ljc1IiB5PSI0MDkuNTYiIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIvPgogIDxyZWN0IGNsYXNzPSJjbHMtMTciIHg9IjQ1Ny43NSIgeT0iNDA5LjU2IiB3aWR0aD0iMjUiIGhlaWdodD0iMjUiLz4KICA8cmVjdCBjbGFzcz0iY2xzLTM1IiB4PSIzNjcuNzUiIHk9IjQzOS41NiIgd2lkdGg9IjI1IiBoZWlnaHQ9IjI1Ii8+CiAgPHJlY3QgY2xhc3M9ImNscy0zMiIgeD0iMzk3Ljc1IiB5PSI0MzkuNTYiIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIvPgogIDxyZWN0IGNsYXNzPSJjbHMtMTciIHg9IjQyNy43NSIgeT0iNDM5LjU2IiB3aWR0aD0iMjUiIGhlaWdodD0iMjUiLz4KICA8cmVjdCBjbGFzcz0iY2xzLTMxIiB4PSI0NTcuNzUiIHk9IjQzOS41NiIgd2lkdGg9IjI1IiBoZWlnaHQ9IjI1Ii8+CiAgPHJlY3QgY2xhc3M9ImNscy0xNyIgeD0iMzY3Ljc1IiB5PSI0NjkuNTYiIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIvPgogIDxyZWN0IGNsYXNzPSJjbHMtMzEiIHg9IjM5Ny43NSIgeT0iNDY5LjU2IiB3aWR0aD0iMjUiIGhlaWdodD0iMjUiLz4KICA8cmVjdCBjbGFzcz0iY2xzLTMyIiB4PSI0MjcuNzUiIHk9IjQ2OS41NiIgd2lkdGg9IjI1IiBoZWlnaHQ9IjI1Ii8+CiAgPHJlY3QgY2xhc3M9ImNscy0zNSIgeD0iNDU3Ljc1IiB5PSI0NjkuNTYiIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIvPgogIDxyZWN0IGNsYXNzPSJjbHMtMzEiIHg9IjM2Ny43NSIgeT0iNDk5LjU2IiB3aWR0aD0iMjUiIGhlaWdodD0iMjUiLz4KICA8cmVjdCBjbGFzcz0iY2xzLTE3IiB4PSIzOTcuNzUiIHk9IjQ5OS41NiIgd2lkdGg9IjI1IiBoZWlnaHQ9IjI1Ii8+CiAgPHJlY3QgY2xhc3M9ImNscy0zNSIgeD0iNDI3Ljc1IiB5PSI0OTkuNTYiIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIvPgogIDxyZWN0IGNsYXNzPSJjbHMtMzIiIHg9IjQ1Ny43NSIgeT0iNDk5LjU2IiB3aWR0aD0iMjUiIGhlaWdodD0iMjUiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTE4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1NjMuNzUgMzk5LjU2KSI+PHRzcGFuIHg9IjAiIHk9IjAiPlRGIENsdXN0ZXJpbmc8L3RzcGFuPjwvdGV4dD4KICA8bGluZSBjbGFzcz0iY2xzLTQiIHgxPSI2MDYuNzUiIHkxPSI0MTkuNTYiIHgyPSI2MDYuNzUiIHkyPSI0NDkuNTYiLz4KICA8bGluZSBjbGFzcz0iY2xzLTQiIHgxPSI1NzYuNzUiIHkxPSI0NDkuNTYiIHgyPSI2MzYuNzUiIHkyPSI0NDkuNTYiLz4KICA8bGluZSBjbGFzcz0iY2xzLTQiIHgxPSI1NzYuNzUiIHkxPSI0NDkuNTYiIHgyPSI1NzYuNzUiIHkyPSI0NzkuNTYiLz4KICA8bGluZSBjbGFzcz0iY2xzLTQiIHgxPSI2MzYuNzUiIHkxPSI0NDkuNTYiIHgyPSI2MzYuNzUiIHkyPSI0NzkuNTYiLz4KICA8bGluZSBjbGFzcz0iY2xzLTQiIHgxPSI1NjEuNzUiIHkxPSI0NzkuNTYiIHgyPSI1OTEuNzUiIHkyPSI0NzkuNTYiLz4KICA8bGluZSBjbGFzcz0iY2xzLTQiIHgxPSI2MjEuNzUiIHkxPSI0NzkuNTYiIHgyPSI2NTEuNzUiIHkyPSI0NzkuNTYiLz4KICA8bGluZSBjbGFzcz0iY2xzLTQiIHgxPSI1NjEuNzUiIHkxPSI0NzkuNTYiIHgyPSI1NjEuNzUiIHkyPSI1MDkuNTYiLz4KICA8bGluZSBjbGFzcz0iY2xzLTQiIHgxPSI1OTEuNzUiIHkxPSI0NzkuNTYiIHgyPSI1OTEuNzUiIHkyPSI1MDkuNTYiLz4KICA8bGluZSBjbGFzcz0iY2xzLTQiIHgxPSI2MjEuNzUiIHkxPSI0NzkuNTYiIHgyPSI2MjEuNzUiIHkyPSI1MDkuNTYiLz4KICA8bGluZSBjbGFzcz0iY2xzLTQiIHgxPSI2NTEuNzUiIHkxPSI0NzkuNTYiIHgyPSI2NTEuNzUiIHkyPSI1MDkuNTYiLz4KICA8Y2lyY2xlIGNsYXNzPSJjbHMtMzYiIGN4PSI1NjEuNzUiIGN5PSI1MDkuNTYiIHI9IjUiLz4KICA8Y2lyY2xlIGNsYXNzPSJjbHMtMzYiIGN4PSI1OTEuNzUiIGN5PSI1MDkuNTYiIHI9IjUiLz4KICA8Y2lyY2xlIGNsYXNzPSJjbHMtMzYiIGN4PSI2MjEuNzUiIGN5PSI1MDkuNTYiIHI9IjUiLz4KICA8Y2lyY2xlIGNsYXNzPSJjbHMtMzYiIGN4PSI2NTEuNzUiIGN5PSI1MDkuNTYiIHI9IjUiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTE4IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3NTcuNzUgMzk5LjU2KSI+PHRzcGFuIHg9IjAiIHk9IjAiPk1hc3RlciBURnM8L3RzcGFuPjwvdGV4dD4KICA8cmVjdCBjbGFzcz0iY2xzLTYiIHg9Ijc4MC43NSIgeT0iNDUzLjU2IiB3aWR0aD0iNDAiIGhlaWdodD0iNTAiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTMwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3OTUuNzUgNDgzLjU2KSI+PHRzcGFuIHg9IjAiIHk9IjAiPjE8L3RzcGFuPjwvdGV4dD4KICA8cmVjdCBjbGFzcz0iY2xzLTgiIHg9Ijc0MC43NSIgeT0iNDczLjU2IiB3aWR0aD0iMzUiIGhlaWdodD0iMzAiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTI1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3NTMuMyA0OTMuNTYpIj48dHNwYW4geD0iMCIgeT0iMCI+MjwvdHNwYW4+PC90ZXh0PgogIDxyZWN0IGNsYXNzPSJjbHMtMiIgeD0iODI1Ljc1IiB5PSI0ODMuNTYiIHdpZHRoPSIzNSIgaGVpZ2h0PSIyMCIvPgogIDx0ZXh0IGNsYXNzPSJjbHMtMjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgzOC4zIDQ5OC41NikiPjx0c3BhbiB4PSIwIiB5PSIwIj4zPC90c3Bhbj48L3RleHQ+CiAgPHBhdGggY2xhc3M9ImNscy0zNCIgZD0iTTc5MC43NSw0NDguNTZsNS0xMCw1LDEwLDUtMTAsNSwxMC0xMCw1LTEwLTUiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTI3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTIuNzcgODcuMDYpIj48dHNwYW4geD0iMCIgeT0iMCI+Q29uZGl0aW9uPC90c3Bhbj48dHNwYW4gY2xhc3M9ImNscy00OCIgeD0iNTUuOTgiIHk9IjAiPiA8L3RzcGFuPjx0c3BhbiB4PSI1OC44NyIgeT0iMCI+QTo8L3RzcGFuPjwvdGV4dD4KICA8dGV4dCBjbGFzcz0iY2xzLTI3IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNTIuMzMgMTM0LjM1KSI+PHRzcGFuIHg9IjAiIHk9IjAiPkNvbmRpdGlvbiBCOjwvdHNwYW4+PC90ZXh0PgogIDxnPgogICAgPGxpbmUgY2xhc3M9ImNscy0xMCIgeDE9IjY1Ni43NSIgeTE9IjI4MC41NSIgeDI9IjcwNC4wMyIgeTI9IjI4MC41NSIvPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy00NyIgcG9pbnRzPSI3MDAuMDcgMjg2LjM2IDcyMS43NSAyODAuNTUgNzAwLjA3IDI3NC43NCA3MDAuMDcgMjg2LjM2Ii8+CiAgPC9nPgogIDxnPgogICAgPGxpbmUgY2xhc3M9ImNscy0xMCIgeDE9Ijg5Ljc1IiB5MT0iMzMxLjY2IiB4Mj0iODkuNzUiIHkyPSIzNzguOTQiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtNDciIHBvaW50cz0iODMuOTQgMzc0Ljk4IDg5Ljc1IDM5Ni42NiA5NS41NiAzNzQuOTggODMuOTQgMzc0Ljk4Ii8+CiAgPC9nPgogIDxnPgogICAgPGxpbmUgY2xhc3M9ImNscy0xMCIgeDE9Ijg5Ljc1IiB5MT0iMTU4Ljg2IiB4Mj0iODkuNzUiIHkyPSIyMDYuMTQiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtNDciIHBvaW50cz0iODMuOTQgMjAyLjE4IDg5Ljc1IDIyMy44NiA5NS41NiAyMDIuMTggODMuOTQgMjAyLjE4Ii8+CiAgPC9nPgogIDxnPgogICAgPGxpbmUgY2xhc3M9ImNscy0zOSIgeDE9IjI3NC4wNiIgeTE9Ijg0Ljk4IiB4Mj0iMjk2LjA2IiB5Mj0iODQuOTgiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtNDciIHBvaW50cz0iMjkzLjE1IDg5LjI0IDMwOS4wNiA4NC45OCAyOTMuMTUgODAuNzIgMjkzLjE1IDg5LjI0Ii8+CiAgPC9nPgogIDxnPgogICAgPGxpbmUgY2xhc3M9ImNscy0zOSIgeDE9IjM0Ni4yNSIgeTE9Ijg0Ljk4IiB4Mj0iMzY4LjI1IiB5Mj0iODQuOTgiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtNDciIHBvaW50cz0iMzY1LjM0IDg5LjI0IDM4MS4yNSA4NC45OCAzNjUuMzQgODAuNzIgMzY1LjM0IDg5LjI0Ii8+CiAgPC9nPgogIDxnPgogICAgPGxpbmUgY2xhc3M9ImNscy0zOSIgeDE9IjI3NC4wNiIgeTE9IjEzMy40NyIgeDI9IjI5Ni4wNiIgeTI9IjEzMy40NyIvPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy00NyIgcG9pbnRzPSIyOTMuMTUgMTM3LjczIDMwOS4wNiAxMzMuNDcgMjkzLjE1IDEyOS4yIDI5My4xNSAxMzcuNzMiLz4KICA8L2c+CiAgPGc+CiAgICA8bGluZSBjbGFzcz0iY2xzLTM5IiB4MT0iMzQ2LjI1IiB5MT0iMTMzLjQ3IiB4Mj0iMzY4LjI1IiB5Mj0iMTMzLjQ3Ii8+CiAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTQ3IiBwb2ludHM9IjM2NS4zNCAxMzcuNzMgMzgxLjI1IDEzMy40NyAzNjUuMzQgMTI5LjIgMzY1LjM0IDEzNy43MyIvPgogIDwvZz4KICA8Y2lyY2xlIGNsYXNzPSJjbHMtNDIiIGN4PSI2ODkuNiIgY3k9IjExMS45NiIgcj0iMTUiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTIyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2ODMuNSAxMTUuNTQpIj48dHNwYW4geD0iMCIgeT0iMCI+VEY8L3RzcGFuPjwvdGV4dD4KICA8cGF0aCBjbGFzcz0iY2xzLTQyIiBkPSJNNzUwLjg1LDEwMS45NmgyMWMyLjQ5LDAsNC41LDEuMzQsNC41LDN2MTRjMCwxLjY2LTIuMDEsMy00LjUsM2gtMjFjLTIuNDksMC00LjUtMS4zNC00LjUtM3YtMTRjMC0xLjY2LDIuMDEtMyw0LjUtM1oiLz4KICA8dGV4dCBjbGFzcz0iY2xzLTIyIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3NDguNDMgMTE1LjU0KSI+PHRzcGFuIHg9IjAiIHk9IjAiPlRGQlM8L3RzcGFuPjwvdGV4dD4KICA8ZWxsaXBzZSBjbGFzcz0iY2xzLTQyIiBjeD0iODM4Ljg4IiBjeT0iMTExLjk2IiByeD0iMjAiIHJ5PSIxNSIvPgogIDx0ZXh0IGNsYXNzPSJjbHMtMjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgyMy45MyAxMTQuNDkpIj48dHNwYW4gY2xhc3M9ImNscy00MSIgeD0iMCIgeT0iMCI+VDwvdHNwYW4+PHRzcGFuIHg9IjUuMzciIHk9IjAiPmFyZ2V0PC90c3Bhbj48L3RleHQ+CiAgPHRleHQgY2xhc3M9ImNscy0yNyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTgyLjYyIDExNC4wNCkiPjx0c3BhbiB4PSIwIiB5PSIwIj5Db25kaXRpb248L3RzcGFuPjx0c3BhbiBjbGFzcz0iY2xzLTQ4IiB4PSI1NS45OCIgeT0iMCI+IDwvdHNwYW4+PHRzcGFuIHg9IjU4Ljg3IiB5PSIwIj5BL0I6PC90c3Bhbj48L3RleHQ+CiAgPGc+CiAgICA8bGluZSBjbGFzcz0iY2xzLTM5IiB4MT0iNzA4LjkxIiB5MT0iMTExLjk2IiB4Mj0iNzMwLjkxIiB5Mj0iMTExLjk2Ii8+CiAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTQ3IiBwb2ludHM9IjcyOCAxMTYuMjIgNzQzLjkxIDExMS45NiA3MjggMTA3LjcgNzI4IDExNi4yMiIvPgogIDwvZz4KICA8Zz4KICAgIDxsaW5lIGNsYXNzPSJjbHMtMzkiIHgxPSI3ODEuMSIgeTE9IjExMS45NiIgeDI9IjgwMy4xIiB5Mj0iMTExLjk2Ii8+CiAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTQ3IiBwb2ludHM9IjgwMC4xOSAxMTYuMjIgODE2LjEgMTExLjk2IDgwMC4xOSAxMDcuNyA4MDAuMTkgMTE2LjIyIi8+CiAgPC9nPgogIDxnPgogICAgPGxpbmUgY2xhc3M9ImNscy0xMCIgeDE9IjUwOC4yNiIgeTE9IjExMC4xOSIgeDI9IjU1NS41NCIgeTI9IjExMC4xOSIvPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy00NyIgcG9pbnRzPSI1NTEuNTggMTE2IDU3My4yNiAxMTAuMTkgNTUxLjU4IDEwNC4zOCA1NTEuNTggMTE2Ii8+CiAgPC9nPgogIDxnPgogICAgPGxpbmUgY2xhc3M9ImNscy0zOSIgeDE9Ijg2NyIgeTE9IjEyOC4wOSIgeDI9Ijg2NyIgeTI9IjEwNi4wOSIvPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy00NyIgcG9pbnRzPSI4NzEuMjYgMTA5IDg2NyA5My4wOSA4NjIuNzMgMTA5IDg3MS4yNiAxMDkiLz4KICA8L2c+CiAgPGxpbmUgY2xhc3M9ImNscy00NiIgeDE9IjI0NS43NSIgeTE9IjQ2OS41NiIgeDI9IjI5NS43NSIgeTI9IjQ4OS41NiIvPgo8L3N2Zz4=" alt="Module 3 workflow for comparing regulatory links, training topic models, and summarizing differential GRN programs." width="100%" /></p>
+<div id="inputs-2" class="section level3">
+<h3>Inputs</h3>
+<p>Module 3 expects:</p>
+<ul>
+<li>Per-condition TF-&gt;TFBS-&gt;target link matrices from Module
+2.</li>
+<li>A comparison metadata table defining pairwise contrasts.</li>
+<li>TF motif cluster assignments from Module 1.</li>
+</ul>
+</div>
+<div id="run-regulatory-topics" class="section level3">
+<h3>Run regulatory topics</h3>
+<p>The topic modeling workflow builds documents such as
+<code>comparison x TF-cluster x direction</code>. Terms are genes and
+TFBS features, and weights are derived from RNA log2 fold changes and
+footprint or peak signal deltas. The model balances RNA and footprint
+contributions before converting weights into pseudocounts for topic
+modeling. By default, WarpLDA uses CraftGRN’s native
+<code>warp_omp</code> sampler, which keeps doc/word Metropolis-Hastings
+semantics while using OpenMP threads inside each model fit. For
+fixed-seed validation runs, set
+<code>warplda_sampler = &quot;warp_ref&quot;</code>; this native sequential
+reference sampler is much slower than <code>warp_omp</code>.</p>
+<p>For regular analysis, keep one selected document construction method
+in the project YAML config. A standard run writes a flat single-method
+layout: <code>topic_documents/</code>, <code>topic_models/</code>,
+<code>topic_extraction/</code>, <code>review/</code>, and
+<code>reports/</code>. Benchmark-only method grids can be stored
+separately in the config and left disabled for normal package runs.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">topic_method</span><span class="kw">:</span><span class="at"> comparison_aggr_multivi</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">topic_k</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">warplda_iterations</span><span class="kw">:</span><span class="at"> </span><span class="dv">2000</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="fu">topic_link_output</span><span class="kw">:</span><span class="at"> pass</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="fu">topic_vae_device</span><span class="kw">:</span><span class="at"> auto</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="fu">topic_vae_batch_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">512</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="fu">pathway_backend</span><span class="kw">:</span><span class="at"> enrichly</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="fu">topic_benchmark_enabled</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="fu">topic_benchmark_methods</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="fu">topic_benchmark_k_grid</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span></code></pre></div>
+<p>Use <code>pathway_backend: enrichly</code> for local cached pathway
+enrichment when the optional <code>enrichly</code> package is installed.
+Use <code>pathway_backend: enrichr</code> when you intentionally want
+the Enrichr web API backend.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">run_topic_modeling</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="at">filtered_dir =</span> <span class="st">&quot;differential_links&quot;</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="at">comparisons =</span> <span class="st">&quot;module3_comparisons.csv&quot;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="at">output_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="at">project_config =</span> <span class="st">&quot;project.yaml&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  <span class="at">run_training =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  <span class="at">run_extraction =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  <span class="at">run_reports =</span> <span class="cn">TRUE</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>)</span></code></pre></div>
+<p>The lower-level calls remain available when you want to inspect
+inputs, separate model training from topic extraction, or rerun only one
+stage.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">module3_prepare_differential_links</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="at">module2 =</span> <span class="st">&quot;connect_tf_target_genes&quot;</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="at">multiomic_data =</span> module3_multiomic,</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="at">compar =</span> <span class="st">&quot;module3_comparisons.csv&quot;</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="at">project_config =</span> <span class="st">&quot;project.yaml&quot;</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="at">output_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>, <span class="st">&quot;differential_links&quot;</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>)</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="fu">module3_construct_docs</span>(</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>  <span class="at">filtered_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>, <span class="st">&quot;differential_links&quot;</span>),</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>  <span class="at">output_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>, <span class="st">&quot;topic_documents&quot;</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>  <span class="at">tf_cluster_map =</span> <span class="cn">NULL</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>  <span class="at">doc_mode =</span> <span class="st">&quot;tf&quot;</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>  <span class="at">doc_design =</span> <span class="st">&quot;comparison&quot;</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>  <span class="at">fp_term_mode =</span> <span class="st">&quot;aggregate&quot;</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>  <span class="at">gene_term_mode =</span> <span class="st">&quot;unique&quot;</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>  <span class="at">count_method =</span> <span class="st">&quot;log&quot;</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>  <span class="at">include_tf_terms =</span> <span class="cn">TRUE</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>)</span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="fu">module3_train_topic_models</span>(</span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>  <span class="at">k_grid =</span> <span class="dv">10</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>  <span class="at">filtered_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>, <span class="st">&quot;differential_links&quot;</span>),</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>  <span class="at">output_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>, <span class="st">&quot;topic_models&quot;</span>),</span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>  <span class="at">flat_output =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a>  <span class="at">tf_cluster_map =</span> <span class="cn">NULL</span>,</span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>  <span class="at">doc_mode =</span> <span class="st">&quot;tf&quot;</span>,</span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a>  <span class="at">doc_design =</span> <span class="st">&quot;comparison&quot;</span>,</span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a>  <span class="at">fp_term_mode =</span> <span class="st">&quot;aggregate&quot;</span>,</span>
+<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a>  <span class="at">gene_term_mode =</span> <span class="st">&quot;unique&quot;</span>,</span>
+<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a>  <span class="at">count_method =</span> <span class="st">&quot;log&quot;</span>,</span>
+<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a>  <span class="at">include_tf_terms =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a>  <span class="at">backend =</span> <span class="st">&quot;vae&quot;</span>,</span>
+<span id="cb10-34"><a href="#cb10-34" tabindex="-1"></a>  <span class="at">vae_variant =</span> <span class="st">&quot;multivi_encoder&quot;</span>,</span>
+<span id="cb10-35"><a href="#cb10-35" tabindex="-1"></a>  <span class="at">vae_device =</span> <span class="st">&quot;auto&quot;</span></span>
+<span id="cb10-36"><a href="#cb10-36" tabindex="-1"></a>)</span>
+<span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a><span class="fu">module3_extract_topics</span>(</span>
+<span id="cb10-39"><a href="#cb10-39" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">10</span>,</span>
+<span id="cb10-40"><a href="#cb10-40" tabindex="-1"></a>  <span class="at">model_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>, <span class="st">&quot;topic_models&quot;</span>),</span>
+<span id="cb10-41"><a href="#cb10-41" tabindex="-1"></a>  <span class="at">output_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>, <span class="st">&quot;topic_extraction&quot;</span>),</span>
+<span id="cb10-42"><a href="#cb10-42" tabindex="-1"></a>  <span class="at">topic_input_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>, <span class="st">&quot;topic_models&quot;</span>),</span>
+<span id="cb10-43"><a href="#cb10-43" tabindex="-1"></a>  <span class="at">backend =</span> <span class="st">&quot;vae&quot;</span>,</span>
+<span id="cb10-44"><a href="#cb10-44" tabindex="-1"></a>  <span class="at">vae_variant =</span> <span class="st">&quot;multivi_encoder&quot;</span>,</span>
+<span id="cb10-45"><a href="#cb10-45" tabindex="-1"></a>  <span class="at">doc_mode =</span> <span class="st">&quot;tf&quot;</span>,</span>
+<span id="cb10-46"><a href="#cb10-46" tabindex="-1"></a>  <span class="at">weight_label =</span> <span class="st">&quot;peak_log2fc_fp_gene_fc_expr&quot;</span>,</span>
+<span id="cb10-47"><a href="#cb10-47" tabindex="-1"></a>  <span class="at">flatten_single_output =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-48"><a href="#cb10-48" tabindex="-1"></a>  <span class="at">topic_report_args =</span> <span class="fu">list</span>(<span class="at">link_topic_output =</span> <span class="st">&quot;pass&quot;</span>)</span>
+<span id="cb10-49"><a href="#cb10-49" tabindex="-1"></a>)</span></code></pre></div>
+<p>When <code>k_grid</code> contains more than one value, the standard
+Module 3 output keeps the K-review tables and topic-model diagnostics
+for the selected method. Broad multi-method benchmarks are developer
+workflows and are not part of the normal package tutorial.</p>
+</div>
+<div id="review-topic-modeling-and-differential-grns" class="section level3">
+<h3>Review topic modeling and differential GRNs</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">build_module3_qc_report</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="at">topic_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="at">differential_links_dir =</span> <span class="st">&quot;differential_links&quot;</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>)</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="fu">visualize_topic_modeling_results</span>(</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  <span class="at">topic_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>  <span class="at">output_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>, <span class="st">&quot;reports&quot;</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>)</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="fu">visualize_differential_grns</span>(</span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>  <span class="at">differential_links_dir =</span> <span class="st">&quot;differential_links&quot;</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>  <span class="at">output_dir =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;regulatory_topics&quot;</span>, <span class="st">&quot;reports&quot;</span>),</span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>  <span class="at">top_tf_n =</span> <span class="dv">10</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>  <span class="at">top_link_n =</span> <span class="dv">300</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="outputs-2" class="section level3">
+<h3>Outputs</h3>
+<p>Module 3 creates:</p>
+<ul>
+<li>Differential link tables, comparison-level plots, and an interactive
+differential GRN network browser with comparison, direction, Top TF, and
+Top link controls.</li>
+<li>Model selection metrics across topic-number choices.</li>
+<li>Topic-term and topic-link probability tables.</li>
+<li>Topic assignments for regulatory links.</li>
+<li>Standard topic review tables and HTML reports under
+<code>review/</code>.</li>
+<li>Optional benchmark review tables and HTML reports under a separate
+benchmark output directory when
+<code>topic_benchmark_enabled: true</code>.</li>
+<li><code>module3_qc_report.html</code>: a QC report summarizing topic
+inputs, method plan, theta separation scores, compact topic-link pass
+counts, and output files.</li>
+<li>Pathway enrichment summaries and plots.</li>
+<li>Master TF connectivity summaries and plots.</li>
+<li>Topic-stratified differential GRN visualizations.</li>
+</ul>
+</div>
+</div>
+<div id="next-steps" class="section level2">
+<h2>Next steps</h2>
+<p>After running the three modules, inspect the model selection metrics,
+choose a topic number, review topic-specific pathway enrichments, and
+use master TF summaries to prioritize condition-specific regulatory
+programs for follow-up.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
