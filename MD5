@@ -1,6 +1,6 @@
-cff8558693838b45a8848c113472505d *DESCRIPTION
+911fb3ce526f53ad73f2817746e7ea81 *DESCRIPTION
 3647c15388de06962a5f57f19bbf5f8d *NAMESPACE
-ab503e69d4ee77a382d30177f04cb5f2 *NEWS.md
+3c576b9fde6c586a5fd92b3c74d19b9f *NEWS.md
 f751dad82e7562f84a268b65205c5d3f *R/RcppExports.R
 af99bea585cf8a7946a87a7648fb799a *R/app_config.R
 b3d25bffe552a3414bfa24902764da24 *R/app_server.R
@@ -35,12 +35,12 @@ a1cd6b59e65cb302c6dab08a8ad5329d *R/utils_step1_qc.R
 23be85a1176afd88f128cad5bf9283cd *R/utils_step3_compact_diff_links.R
 1a45b2214c0324dd23cba9f2e0d970eb *R/utils_step3_diff_grn_master_tf_summary.R
 8ec0e0bc5fbe7f2b4ea6acb77cceaebe *R/utils_step3_diff_grn_pathway.R
-d618dc89246c8762c10c26a176b516d2 *R/utils_step3_topic_benchmark.R
-d5e9cdf99b82fb3d13242513a702f7e6 *R/utils_step3_topic_models.R
+13d238bc436b883191a9fa46c544cef8 *R/utils_step3_topic_benchmark.R
+747b8dd0905c79cd07df9814292a4732 *R/utils_step3_topic_models.R
 4f26170634d6b0fcab0373919e9a7e9d *R/zzz.R
 f7d582896d9bc4711d328ec7ea4faf15 *README.md
 7fd9b030859bf2b018d68b83fd8992ba *build/vignette.rds
-452612760dd77567a02b3b7a2d173068 *inst/WORDLIST
+c5555dbf881d279a230af5bb64074e5f *inst/WORDLIST
 81560d1b906a530c87fa0acbb2f5cca4 *inst/app/www/favicon.ico
 aa2eea0ebf75f5d8a30f97f570bad37d *inst/doc/craftgrn.R
 e083f23add34d6f3217766dfd0b6903c *inst/doc/craftgrn.Rmd
@@ -90,7 +90,7 @@ e2b7b87df16a2aecfdfef4049f536dfd *man/report_direct_tf_tf_regulations.Rd
 96a9b94bdd9bf131f1d7a98db72ec9f1 *man/report_tf_tf_coregulations.Rd
 c98fdc02801ad1aacb3798302584ae15 *man/report_top_tf_targets.Rd
 06ee16a94d1c860a9cfc0c2d4c91c184 *man/run_app.Rd
-e31bb7c44cf2a8713ddd42191556b2c8 *man/run_topic_modeling.Rd
+f28d2ecf17720453ccb9bd2bf0c9f4bf *man/run_topic_modeling.Rd
 e96e2b3da7873d75dbe8fc5095dfcdb9 *man/save_omics_data.Rd
 ed53d5041e17c1c62fb1baa5b43d72d3 *man/validate_config.Rd
 89d17dc6ab2f0dd1630c0ed84db357c5 *man/visualize_differential_grns.Rd
@@ -112,7 +112,7 @@ c1316521e483bd9cd992648849dd72df *tests/testthat/test-app-server-utils.R
 4292dc402adfba9547149cafd069a98b *tests/testthat/test-config-demo-data.R
 1059622919a5fda74737eaa38342887e *tests/testthat/test-config-pkgdown.R
 0a7661cd7ba77134a7122d2914635a0c *tests/testthat/test-config-readme-public-api.R
-504cc73954b78c542eb00ebea1679e62 *tests/testthat/test-config.R
+f7e9a389bfe882d387d9b0fae47c690e *tests/testthat/test-config.R
 fa1f5cb0c1ae490e720ef356f6e39903 *tests/testthat/test-module1-footprints.R
 16b78387701d813e6f23fb0c9eb177d3 *tests/testthat/test-module1-logging-progress.R
 1f1b60201c2db744e19c97b71b9546b6 *tests/testthat/test-module1-module2-api-names.R
@@ -125,8 +125,8 @@ ece03f142f651a8a4a69ffda328a9431 *tests/testthat/test-module1-prep-outputs.R
 85f8b4d5f6505f89fa25b02cc181710d *tests/testthat/test-module3-compact-diff-links.R
 0a0dec39d8663cca61096ec5c132ad9e *tests/testthat/test-module3-native-warplda.R
 eedd70f7f3a28e630e6da139340bf297 *tests/testthat/test-module3-reports-api.R
-a36acbbbdbd57a3c23cd6818f360ff61 *tests/testthat/test-module3-topic-benchmark.R
-81a15c8c9b7fbf057189cdb56f0a34fa *tests/testthat/test-module3-topic-models.R
+5690a7637def5e673c5eec439f10db43 *tests/testthat/test-module3-topic-benchmark.R
+4621c74c205ff23e0d74c9716dc55f73 *tests/testthat/test-module3-topic-models.R
 1b618071ef0235747956b48041391a59 *tests/testthat/test-test-suite-naming.R
 ff471c09764e2db10beecaa3fbaeffe9 *tests/testthat/test-topic-distance.R
 97f121189ae8a51fdde86152863d8bd7 *tests/testthat/test-topic-projects.R

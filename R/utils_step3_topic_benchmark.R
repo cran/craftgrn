@@ -389,7 +389,23 @@
 
 .m3tb_color_family <- function(x) {
   x <- as.character(x)
+  is_ctrl_fbs <- grepl(
+    "(^|[^0-9A-Za-z.])10[ _]?FBS($|[^0-9A-Za-z.])|Full",
+    x,
+    ignore.case = TRUE,
+    perl = TRUE
+  )
   data.table::fcase(
+    grepl("Met[.]Cys|Met/Cys|Met Cys", x, ignore.case = TRUE), "Met.Cys",
+    grepl("Gln[.]Arg|Gln/Arg|Gln Arg", x, ignore.case = TRUE), "Gln.Arg",
+    grepl("BCAA", x, ignore.case = TRUE), "BCAA",
+    grepl("Glc", x, ignore.case = TRUE), "Glc",
+    grepl("Lys", x, ignore.case = TRUE), "Lys",
+    grepl("Trp", x, ignore.case = TRUE), "Trp",
+    grepl("Arg", x, ignore.case = TRUE), "Arg",
+    grepl("Gln", x, ignore.case = TRUE), "Gln",
+    is_ctrl_fbs, "Ctrl",
+    grepl("FBS", x, ignore.case = TRUE), "FBS",
     grepl("BATF", x, ignore.case = TRUE), "BATF",
     grepl("IRF4", x, ignore.case = TRUE), "IRF4",
     grepl("RUNX3|Runx3", x, ignore.case = TRUE), "RUNX3",
@@ -404,7 +420,19 @@
 
 .m3tb_group_color <- function(x) {
   fam <- .m3tb_color_family(x)
+  x_chr <- as.character(x)
+  is_high <- grepl("(^|[^0-9])25([^0-9]|$)|(^|[^0-9])10([^0-9]|$)|12[.]5|Full", x_chr, ignore.case = TRUE)
   pal <- c(
+    Met.Cys = "#DE782C",
+    Gln.Arg = "#2D8049",
+    BCAA = "#3C4682",
+    Glc = "#5A8EBC",
+    Lys = "#D81B60",
+    Trp = "#9C5AA6",
+    Arg = "#4DAF4A",
+    Gln = "#1B9E77",
+    Ctrl = "#717171",
+    FBS = "#A5A5A5",
     BATF = "#D55E00",
     IRF4 = "#0072B2",
     RUNX3 = "#009E73",
@@ -415,7 +443,26 @@
     Fibroblast = "#8A5FBF",
     Other = "#2A9D8F"
   )
-  unname(pal[fam])
+  out <- unname(pal[fam])
+  out[fam == "Met.Cys" & !is_high] <- "#F29550"
+  out[fam == "Gln.Arg" & !is_high] <- "#72AF87"
+  out[fam == "BCAA" & !is_high] <- "#7E85B1"
+  out
+}
+
+.m3tb_metric_group_from_label <- function(label, direction = NULL) {
+  fam <- .m3tb_color_family(label)
+  out <- data.table::fifelse(!is.na(fam) & nzchar(fam) & fam != "Other", fam, as.character(label))
+  if (!is.null(direction)) {
+    direction <- as.character(direction)
+    out <- paste(out, direction, sep = "::")
+  }
+  out
+}
+
+.m3tb_use_inferred_metric_groups <- function(metric_group) {
+  metric_group <- as.character(metric_group)
+  any(!is.na(metric_group) & nzchar(metric_group) & duplicated(metric_group))
 }
 
 .m3tb_condition_base <- function(x) {
@@ -532,11 +579,15 @@
   }
   if (all(c("cond1_label", "cond2_label") %in% names(dt))) {
     conds <- unique(c(as.character(dt$cond1_label), as.character(dt$cond2_label)))
+    cond_metric_group <- .m3tb_metric_group_from_label(.m3tb_display_label(conds))
+    if (!.m3tb_use_inferred_metric_groups(cond_metric_group)) {
+      cond_metric_group <- conds
+    }
     condition <- data.table::data.table(
       context_type = "condition",
       comparison_label = conds,
       display_label = .m3tb_display_label(conds),
-      metric_group = conds
+      metric_group = cond_metric_group
     )
     if (!"comparison_id" %in% names(dt)) {
       dt[, comparison_id := paste(as.character(cond1_label), as.character(cond2_label), sep = "_vs_")]
@@ -553,18 +604,32 @@
     display_base[is.na(display_base) | !nzchar(trimws(display_base))] <- dt$comparison_id[
       is.na(display_base) | !nzchar(trimws(display_base))
     ]
+    metric_base <- if ("cond1_display" %in% names(dt)) {
+      as.character(dt$cond1_display)
+    } else {
+      as.character(dt$cond1_label)
+    }
+    metric_base[is.na(metric_base) | !nzchar(trimws(metric_base))] <- display_base[
+      is.na(metric_base) | !nzchar(trimws(metric_base))
+    ]
+    up_metric_group <- .m3tb_metric_group_from_label(metric_base, "Target-Up")
+    down_metric_group <- .m3tb_metric_group_from_label(metric_base, "Target-Down")
+    if (!.m3tb_use_inferred_metric_groups(c(up_metric_group, down_metric_group))) {
+      up_metric_group <- paste(dt$comparison_id, "Target-Up", sep = "::")
+      down_metric_group <- paste(dt$comparison_id, "Target-Down", sep = "::")
+    }
     comparison <- data.table::rbindlist(list(
       data.table::data.table(
         context_type = "comparison",
         comparison_label = paste(dt$comparison_id, "Target-Up", sep = "::"),
         display_label = paste(display_base, "Target-Up"),
-        metric_group = paste(dt$comparison_id, "Target-Up", sep = "::")
+        metric_group = up_metric_group
       ),
       data.table::data.table(
         context_type = "comparison",
         comparison_label = paste(dt$comparison_id, "Target-Down", sep = "::"),
         display_label = paste(display_base, "Target-Down"),
-        metric_group = paste(dt$comparison_id, "Target-Down", sep = "::")
+        metric_group = down_metric_group
       )
     ), use.names = TRUE, fill = TRUE)
     return(unique(data.table::rbindlist(list(condition, comparison), use.names = TRUE, fill = TRUE)))
@@ -694,8 +759,8 @@
     fp_term_mode = row$fp_mode[[1L]],
     model_label = row$model_label[[1L]],
     panel_label = paste(row$setup_label[[1L]], row$model_label[[1L]], sep = "\n"),
-    color_family = .m3tb_color_family(display_label),
-    color = .m3tb_group_color(display_label)
+    color_family = .m3tb_color_family(metric_group),
+    color = .m3tb_group_color(metric_group)
   )]
   list(score = score, per_label = per_label, profiles = profiles, mds_points = mds_points)
 }
@@ -2806,6 +2871,8 @@ run_module3_topic_benchmark <- function(filtered_dir,
                                         reuse_if_exists = TRUE,
                                         local_threads = NULL,
                                         warplda_iterations = 2000L,
+                                        count_method = c("log", "bin"),
+                                        count_input = NULL,
                                         vae_python = NULL,
                                         vae_epochs = 200L,
                                         vae_batch_size = 64L,
@@ -2824,6 +2891,8 @@ run_module3_topic_benchmark <- function(filtered_dir,
   k_grid <- sort(unique(as.integer(k_grid)))
   k_grid <- k_grid[is.finite(k_grid) & k_grid > 1L]
   if (!length(k_grid)) .log_abort("k_grid must include at least one integer greater than 1.")
+  count_method <- match.arg(count_method)
+  count_input_effective <- .resolve_topic_count_input(count_method = count_method, count_input = count_input)
   method_plan <- .module3_topic_method_plan(methods = methods, k_grid = k_grid)
   output_layout <- .m3tb_resolve_output_layout(
     output_layout = output_layout,
@@ -2881,7 +2950,8 @@ run_module3_topic_benchmark <- function(filtered_dir,
         fp_term_mode = row$fp_mode[[1L]],
         gene_term_mode = "unique",
         include_tf_terms = TRUE,
-        count_input = "pseudo_count_log",
+        count_method = count_method,
+        count_input = count_input_effective,
         backend = row$backend[[1L]],
         vae_variant = row$vae_variant[[1L]],
         reuse_if_exists = reuse_if_exists,
@@ -3011,6 +3081,9 @@ run_module3_topic_benchmark <- function(filtered_dir,
 #' @param analysis_label Label written to the input summary.
 #' @param count_method Count conversion method.
 #' @param count_scale Count scaling factor.
+#' @param count_input Count column used for the cached sparse topic matrix. If
+#'   `NULL`, CraftGRN uses `pseudo_count_log` for `count_method = "log"` and
+#'   `pseudo_count_bin` otherwise.
 #' @param threshold_gene_expr Minimum condition-level target-gene expression.
 #' @param threshold_fp_score Minimum condition-level footprint score.
 #' @param threshold_tf_expr Minimum condition-level TF expression.
@@ -3045,6 +3118,7 @@ module3_prepare_topic_inputs <- function(filtered_dir,
                                          analysis_label = NULL,
                                          count_method = c("bin", "log"),
                                          count_scale = 50,
+                                         count_input = NULL,
                                          threshold_gene_expr = 0,
                                          threshold_fp_score = 0,
                                          threshold_tf_expr = -Inf,
@@ -3069,6 +3143,8 @@ module3_prepare_topic_inputs <- function(filtered_dir,
   fp_term_mode <- .resolve_fp_term_mode(fp_term_mode)
   gene_term_mode <- match.arg(gene_term_mode)
   count_method <- match.arg(count_method)
+  count_input_requested <- if (is.null(count_input) || !length(count_input)) NA_character_ else as.character(count_input[[1L]])
+  count_input_effective <- .resolve_topic_count_input(count_method = count_method, count_input = count_input)
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
   rds_dir <- file.path(output_dir, "rds")
   required_cache <- file.path(rds_dir, c("edges_docs.rds", "doc_term.rds", "dtm.rds", "dtm_index.rds"))
@@ -3079,7 +3155,10 @@ module3_prepare_topic_inputs <- function(filtered_dir,
       all(c("doc_design", "doc_mode", "fp_term_mode") %in% names(summary_dt)) &&
       identical(as.character(summary_dt$doc_design[[1L]]), doc_design) &&
       identical(as.character(summary_dt$doc_mode[[1L]]), doc_mode) &&
-      identical(as.character(summary_dt$fp_term_mode[[1L]]), fp_term_mode)
+      identical(as.character(summary_dt$fp_term_mode[[1L]]), fp_term_mode) &&
+      all(c("count_method", "count_input_effective") %in% names(summary_dt)) &&
+      identical(as.character(summary_dt$count_method[[1L]]), count_method) &&
+      identical(as.character(summary_dt$count_input_effective[[1L]]), count_input_effective)
     if (isTRUE(cache_matches)) {
       if (isTRUE(verbose)) .log_inform("Reusing existing Module 3 topic input cache: {output_dir}")
       return(invisible(list(output_dir = output_dir, summary = summary_dt, reused = TRUE)))
@@ -3168,7 +3247,7 @@ module3_prepare_topic_inputs <- function(filtered_dir,
   .save_all(output_dir, "edges_filtered", edges_filt)
   .save_all(output_dir, "edges_docs", edges_docs)
   .save_all(output_dir, "doc_term", doc_term)
-  dtm_obj <- build_sparse_dtm(doc_term, count_col = "pseudo_count")
+  dtm_obj <- build_sparse_dtm(doc_term, count_col = count_input_effective)
   .save_all(output_dir, "dtm", dtm_obj$dtm)
   .save_all(output_dir, "dtm_index", list(doc_index = dtm_obj$doc_index, term_index = dtm_obj$term_index))
   summary_dt <- data.table::data.table(
@@ -3176,6 +3255,10 @@ module3_prepare_topic_inputs <- function(filtered_dir,
     doc_design = doc_design,
     doc_mode = doc_mode,
     fp_term_mode = fp_term_mode,
+    count_method = count_method,
+    count_scale = as.numeric(count_scale),
+    count_input_requested = count_input_requested,
+    count_input_effective = count_input_effective,
     n_link_rows_loaded = as.double(n_loaded),
     n_link_rows_after_subset = as.double(nrow(edges_dt)),
     n_link_rows_after_filter = as.double(nrow(edges_filt)),
@@ -3183,7 +3266,8 @@ module3_prepare_topic_inputs <- function(filtered_dir,
     n_doc_term_rows = as.double(nrow(doc_term)),
     n_documents = as.double(data.table::uniqueN(doc_term$doc_id)),
     n_terms = as.double(data.table::uniqueN(doc_term$term_id)),
-    n_nonzero = as.double(Matrix::nnzero(dtm_obj$dtm))
+    n_nonzero = as.double(Matrix::nnzero(dtm_obj$dtm)),
+    n_model_tokens = as.double(sum(.safe_num(doc_term[[count_input_effective]]), na.rm = TRUE))
   )
   data.table::fwrite(summary_dt, summary_path)
   if (isTRUE(verbose)) {
@@ -3537,6 +3621,8 @@ run_regulatory_topics <- function(filtered_dir,
                                   reuse_if_exists = TRUE,
                                   local_threads = NULL,
                                   warplda_iterations = 2000L,
+                                  count_method = c("log", "bin"),
+                                  count_input = NULL,
                                   vae_python = NULL,
                                   vae_epochs = 200L,
                                   vae_batch_size = 64L,
@@ -3555,6 +3641,7 @@ run_regulatory_topics <- function(filtered_dir,
                                   build_qc_report = TRUE,
                                   verbose = TRUE) {
   topic_link_output <- match.arg(topic_link_output)
+  count_method <- match.arg(count_method)
   if (length(method) != 1L) .log_abort("run_regulatory_topics() expects one selected method.")
   extraction_args <- modifyList(
     list(
@@ -3576,6 +3663,8 @@ run_regulatory_topics <- function(filtered_dir,
     reuse_if_exists = reuse_if_exists,
     local_threads = local_threads,
     warplda_iterations = warplda_iterations,
+    count_method = count_method,
+    count_input = count_input,
     vae_python = vae_python,
     vae_epochs = vae_epochs,
     vae_batch_size = vae_batch_size,
@@ -3631,6 +3720,8 @@ run_regulatory_topics <- function(filtered_dir,
                                              k_grid = NULL,
                                              warplda_iterations = NULL,
                                              topic_link_output = NULL,
+                                             count_method = NULL,
+                                             count_input = NULL,
                                              vae_device = NULL,
                                              vae_batch_size = NULL,
                                              pathway_backend = NULL) {
@@ -3658,6 +3749,18 @@ run_regulatory_topics <- function(filtered_dir,
   } else {
     as.character(topic_link_output)[[1L]]
   }
+  count_method <- if (is.null(count_method)) {
+    as.character(.module3_cfg_value(cfg, c("topic_count_method", "module3_topic_count_method"), "log"))[[1L]]
+  } else {
+    as.character(count_method)[[1L]]
+  }
+  if (!count_method %in% c("log", "bin")) count_method <- "log"
+  count_input <- if (is.null(count_input)) {
+    .module3_cfg_value(cfg, c("topic_count_input", "module3_topic_count_input"), NULL)
+  } else {
+    count_input
+  }
+  count_input <- .resolve_topic_count_input(count_method = count_method, count_input = count_input)
   vae_device <- if (is.null(vae_device)) {
     as.character(.module3_cfg_value(cfg, c("topic_vae_device", "module3_topic_vae_device"), "auto"))[[1L]]
   } else {
@@ -3718,6 +3821,8 @@ run_regulatory_topics <- function(filtered_dir,
     k_grid = k_grid,
     warplda_iterations = iterations,
     topic_link_output = link_output,
+    count_method = count_method,
+    count_input = count_input,
     vae_device = vae_device,
     vae_batch_size = vae_batch_size,
     pathway_backend = pathway_backend,
@@ -3761,6 +3866,10 @@ run_regulatory_topics <- function(filtered_dir,
 #'   read from `project_config` or use `2000`.
 #' @param topic_link_output Topic-link output mode. If `NULL`, read from
 #'   `project_config` or use `"pass"`.
+#' @param count_method Topic count conversion method. If `NULL`, read from
+#'   `project_config` or use `"log"`.
+#' @param count_input Topic count column for model fitting. If `NULL`, inferred
+#'   from `count_method`.
 #' @param vae_device VAE device, for example `"auto"`, `"cpu"`, or `"cuda"`.
 #'   If `NULL`, read from `project_config` or use `"auto"`.
 #' @param vae_batch_size VAE mini-batch size. If `NULL`, read from
@@ -3785,6 +3894,8 @@ run_topic_modeling <- function(filtered_dir,
                                k_grid = NULL,
                                warplda_iterations = NULL,
                                topic_link_output = NULL,
+                               count_method = NULL,
+                               count_input = NULL,
                                vae_device = NULL,
                                vae_batch_size = NULL,
                                pathway_backend = NULL,
@@ -3796,6 +3907,8 @@ run_topic_modeling <- function(filtered_dir,
     k_grid = k_grid,
     warplda_iterations = warplda_iterations,
     topic_link_output = topic_link_output,
+    count_method = count_method,
+    count_input = count_input,
     vae_device = vae_device,
     vae_batch_size = vae_batch_size,
     pathway_backend = pathway_backend
@@ -3809,6 +3922,8 @@ run_topic_modeling <- function(filtered_dir,
     k_grid = resolved$k_grid,
     warplda_iterations = resolved$warplda_iterations,
     topic_link_output = resolved$topic_link_output,
+    count_method = resolved$count_method,
+    count_input = resolved$count_input,
     pathway_backend = resolved$pathway_backend,
     extraction_topic_report_args = modifyList(resolved$extraction_args, extraction_topic_report_args),
     vae_device = resolved$vae_device,

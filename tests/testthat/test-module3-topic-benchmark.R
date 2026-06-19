@@ -276,6 +276,65 @@ test_that("Module 3 topic benchmark scores existing models and writes review rep
   expect_equal(unique(pass_counts$selected_k), 2L)
 })
 
+test_that("Module 3 review colors nutrient-stress labels by stress type", {
+  labels <- c(
+    "HPAFII 0 BCAA Ctrl",
+    "HPAFII 25 BCAA TGFb",
+    "HPAFII 0.05 Glc Ctrl",
+    "HPAFII 0 Gln.Arg Ctrl",
+    "HPAFII 12.5uM Met.Cys TGFb",
+    "HPAFII 0 Lys Ctrl",
+    "HPAFII 0 Trp TGFb",
+    "HPAFII 10 Arg Ctrl",
+    "HPAFII 5 Gln Ctrl",
+    "HPAFII 10 FBS Ctrl"
+  )
+
+  expect_equal(
+    .m3tb_color_family(labels),
+    c("BCAA", "BCAA", "Glc", "Gln.Arg", "Met.Cys", "Lys", "Trp", "Arg", "Gln", "Ctrl")
+  )
+  expect_gt(length(unique(.m3tb_group_color(labels))), 4L)
+})
+
+test_that("Module 3 benchmark infers nutrient-stress metric groups when repeated", {
+  comparisons <- data.table::data.table(
+    comparison_id = c(
+      "HPAFII_0_BCAA_Ctrl_vs_10_FBS_Ctrl",
+      "HPAFII_25_BCAA_Ctrl_vs_10_FBS_Ctrl",
+      "HPAFII_0_Glc_Ctrl_vs_10_FBS_Ctrl",
+      "HPAFII_0_FBS_Ctrl_vs_10_FBS_Ctrl",
+      "HPAFII_0p4_FBS_Ctrl_vs_10_FBS_Ctrl"
+    ),
+    cond1_label = c(
+      "HPAFII_0_BCAA_Ctrl",
+      "HPAFII_25_BCAA_Ctrl",
+      "HPAFII_0_Glc_Ctrl",
+      "HPAFII_0_FBS_Ctrl",
+      "HPAFII_0p4_FBS_Ctrl"
+    ),
+    cond2_label = rep("HPAFII_10_FBS_Ctrl", 5),
+    comparison_label = c(
+      "0_BCAA Ctrl vs 10_FBS Ctrl",
+      "25_BCAA Ctrl vs 10_FBS Ctrl",
+      "0_Glc Ctrl vs 10_FBS Ctrl",
+      "0_FBS Ctrl vs 10_FBS Ctrl",
+      "0.4_FBS Ctrl vs 10_FBS Ctrl"
+    )
+  )
+
+  design <- .m3tb_design_table(comparisons)
+
+  expect_true(any(design$context_type == "condition" & design$metric_group == "BCAA"))
+  expect_true(any(design$context_type == "condition" & design$metric_group == "Ctrl"))
+  expect_false(any(design$metric_group == "Full"))
+  expect_true(any(design$context_type == "comparison" & design$metric_group == "BCAA::Target-Up"))
+  expect_true(any(design$context_type == "comparison" & design$metric_group == "BCAA::Target-Down"))
+  expect_true(any(design$context_type == "comparison" & design$metric_group == "FBS::Target-Up"))
+  expect_true(any(design$context_type == "comparison" & design$metric_group == "FBS::Target-Down"))
+  expect_false(any(design$context_type == "comparison" & grepl("^Ctrl::", design$metric_group)))
+})
+
 test_that("Module 3 topic reports use overlap denominator for pathway universe size", {
   topic_pathways <- data.table::data.table(
     topic = 2L,
@@ -1086,6 +1145,8 @@ test_that("Module 3 topic wrapper resolves standard run settings from project co
     topic_k_grid = c(8L, 10L),
     warplda_iterations = 25L,
     topic_link_output = "none",
+    topic_count_method = "bin",
+    topic_count_input = "pseudo_count_bin",
     topic_vae_device = "cuda",
     topic_vae_batch_size = 512L,
     topic_benchmark_enabled = TRUE,
@@ -1097,6 +1158,8 @@ test_that("Module 3 topic wrapper resolves standard run settings from project co
   expect_equal(resolved$k_grid, c(8L, 10L))
   expect_equal(resolved$warplda_iterations, 25L)
   expect_equal(resolved$topic_link_output, "none")
+  expect_equal(resolved$count_method, "bin")
+  expect_equal(resolved$count_input, "pseudo_count_bin")
   expect_equal(resolved$vae_device, "cuda")
   expect_equal(resolved$vae_batch_size, 512L)
   expect_true(resolved$benchmark$enabled)
@@ -1109,6 +1172,8 @@ test_that("Module 3 topic wrapper resolves standard run settings from project co
     k_grid = 12L,
     warplda_iterations = 3L,
     topic_link_output = "pass",
+    count_method = "log",
+    count_input = "pseudo_count_log",
     vae_device = "cpu",
     vae_batch_size = 128L
   )
@@ -1116,6 +1181,8 @@ test_that("Module 3 topic wrapper resolves standard run settings from project co
   expect_equal(overridden$k_grid, 12L)
   expect_equal(overridden$warplda_iterations, 3L)
   expect_equal(overridden$topic_link_output, "pass")
+  expect_equal(overridden$count_method, "log")
+  expect_equal(overridden$count_input, "pseudo_count_log")
   expect_equal(overridden$vae_device, "cpu")
   expect_equal(overridden$vae_batch_size, 128L)
 })

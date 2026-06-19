@@ -1,3 +1,10 @@
+# craftgrn 0.1.7
+
+* Updated DESCRIPTION references to include author-year text for the next CRAN
+  update.
+* Fixed a CRAN macOS test failure by comparing config-resolved relative paths
+  against the canonical project directory path.
+
 # craftgrn 0.1.6
 
 * Revised DESCRIPTION references to avoid CRAN incoming spell-check notes and

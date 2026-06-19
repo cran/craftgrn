@@ -1,7 +1,7 @@
 Package: craftgrn
 Title: Integrative Chromatin Accessibility and RNA Framework for Gene
         Regulatory Networks
-Version: 0.1.6
+Version: 0.1.7
 Authors@R: c(
     person("Yaoxiang", "Li", , "liyaoxiang@outlook.com", role = c("aut", "cre")),
     person("Chunling", "Yi", role = "aut")
@@ -12,9 +12,10 @@ Description: Provides a reproducible framework for constructing and comparing
     enhancer-gene linking, transcription factor focused network analysis,
     differential network analysis, and regulatory topic modeling workflows for
     systematic exploration of gene regulation across conditions. Methodological
-    background is available at <doi:10.1038/s41467-020-18035-1>,
-    <https://www.jmlr.org/papers/v3/blei03a.html>, and
-    <doi:10.48550/arXiv.1510.08628>.
+    background is described in Bentsen and others (2020)
+    <doi:10.1038/s41467-020-18035-1>, Blei, Ng and Jordan (2003)
+    <https://www.jmlr.org/papers/v3/blei03a.html>, and Chen, Li, Zhu and Chen
+    (2015) <doi:10.48550/arXiv.1510.08628>.
 License: GPL (>= 3)
 Depends: R (>= 4.1.0)
 Imports: cli, cluster, config, data.table, dplyr, digest, future,
@@ -39,9 +40,9 @@ URL: https://oncologylab.github.io/craftgrn/,
 BugReports: https://github.com/oncologylab/craftgrn/issues
 Config/Needs/website: r-lib/pkgdown, tidyverse/tidytemplate
 NeedsCompilation: yes
-Packaged: 2026-06-11 16:24:12 UTC; yl814
+Packaged: 2026-06-19 16:01:05 UTC; yl814
 Author: Yaoxiang Li [aut, cre],
   Chunling Yi [aut]
 Maintainer: Yaoxiang Li <liyaoxiang@outlook.com>
 Repository: CRAN
-Date/Publication: 2026-06-18 16:50:08 UTC
+Date/Publication: 2026-06-19 19:40:11 UTC

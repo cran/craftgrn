@@ -14,6 +14,8 @@ run_topic_modeling(
   k_grid = NULL,
   warplda_iterations = NULL,
   topic_link_output = NULL,
+  count_method = NULL,
+  count_input = NULL,
   vae_device = NULL,
   vae_batch_size = NULL,
   pathway_backend = NULL,
@@ -48,6 +50,12 @@ read from `project_config` or use `2000`.}
 
 \item{topic_link_output}{Topic-link output mode. If `NULL`, read from
 `project_config` or use `"pass"`.}
+
+\item{count_method}{Topic count conversion method. If `NULL`, read from
+`project_config` or use `"log"`.}
+
+\item{count_input}{Topic count column for model fitting. If `NULL`, inferred
+from `count_method`.}
 
 \item{vae_device}{VAE device, for example `"auto"`, `"cpu"`, or `"cuda"`.
 If `NULL`, read from `project_config` or use `"auto"`.}
